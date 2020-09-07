@@ -17,7 +17,10 @@
                         prepend-inner-icon="local_atm"
                         label="Insira o valor"
                       ></v-text-field>
-                      <v-btn text color="#ecc30b" block>Abrir Caixa</v-btn>
+                      <v-btn text color="#ecc30b" block>
+                        <span>Abrir Caixa</span>
+                        <v-icon small right>lock_open</v-icon>
+                      </v-btn>
                       </v-form>
                     </v-col>
                   </v-row>
