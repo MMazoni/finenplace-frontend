@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-app-bar text app>
+    <v-app-bar flat app>
       <v-app-bar-nav-icon class="grey--text" @click="drawer = !drawer">
         <v-icon>menu</v-icon>
       </v-app-bar-nav-icon>
@@ -38,7 +38,7 @@ export default {
       drawer: false,
       links: [
         {icon: 'dashboard', text: 'Dashboard', route: '/'},
-        {icon: 'folder', text: 'Caixa', route: '/caixa'},
+        {icon: 'local_atm', text: 'Caixa', route: '/caixa'},
         {icon: 'person', text: 'Funcionários', route: '/pessoas'}        
       ]
     };
