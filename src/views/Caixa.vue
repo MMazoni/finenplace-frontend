@@ -10,14 +10,14 @@
               <v-container fluid class>
                 <v-row align="center" justify="center">
                   <v-col cols="7">
-                    <v-form @submit.prevent="submit">
+                    <v-form>
                       <v-text-field
                         v-model="valorInicial"
                         class="mt-0 pt-0"
                         prepend-inner-icon="local_atm"
                         label="Insira o valor"
                       ></v-text-field>
-                      <v-btn text color="#ecc30b" block @click.stop="confirm" type="submit">
+                      <v-btn text color="#ecc30b" block @click.stop="confirm">
                         <span>Abrir Caixa</span>
                         <v-icon small right>lock_open</v-icon>
                       </v-btn>
@@ -34,9 +34,6 @@
   </div>
 </template>
 <style scoped>
-.form {
-  width: 100%;
-}
 </style>
 <script>
 import Confirmation from "@/components/Confirmation";
@@ -51,8 +48,17 @@ export default {
       confirmation: null
     };
   },
+
+  watch: {
+    confirmation(value) {
+      if (value === true) {
+        this.abrirCaixa();
+      }
+    }
+  },
+
   methods: {
-    submit() {
+    abrirCaixa() {
       console.log(this.valorInicial)
     },
     confirm() {
@@ -60,7 +66,9 @@ export default {
     }
   },
   created() {
-    bus.$on("runConfirmation", data => this.confirmation = data);
+    bus.$on("runConfirmation", data => {
+      this.confirmation = data;
+    });
   }
 };
 </script>
