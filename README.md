@@ -6,7 +6,7 @@
 [![Vue-cli Version][cli-image]][cli-url]
 
 
-Sistema web para abertura e fechamento de caixa, cadastro de mercadorias, fornecedores e notas fiscais, um maior controle automatizado para compreender a saúde do restaurante.
+Sistema web para abertura e fechamento de caixa, cadastro de mercadorias, fornecedores e notas fiscais, um maior controle automatizado para compreender a saúde do restaurante. Esse projeto será o nosso TCC no curso de Análise e Desenvolvimento de Sistemas, na Fatec Rubens Lara.
 
 ## Preparando o projeto
 
@@ -19,17 +19,14 @@ Baixe o projeto ou dê `git clone` e entre no diretório.
 ```sh
 npm install
 ```
-Instale o Vue CLI
-```sh
-npm install -g @vue/cli
-# OU
-yarn global add @vue/cli
-```
+
 ## Subir servidor local
+
+Após a instalação das dependências é preciso subir o servidor para utilizar a aplicação no navegador.
 
 #### Runserver
 
-No terminal utilize o comando.
+No terminal, escreva o comando:
 
 ```sh
 npm run serve
@@ -38,7 +35,7 @@ npm run serve
 Agora vá no navegador e coloque: `localhost:8080` 
 
 
-## Contribuidores
+## Integrantes do TCC
 
 * **Fábio Sales** - [fsalesalmeida](https://github.com/fsalesalmeida)
 * **Felipe Ramos** - [Feliperc7](https://github.com/Feliperc7)
