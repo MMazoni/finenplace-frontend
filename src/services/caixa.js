@@ -1,4 +1,6 @@
 
+import axios from "./config";
+
 export const getCaixas = () =>  axios.get("caixa");
 
 export const showCaixa = id => axios.get(`caixa/${id}`);

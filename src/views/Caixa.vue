@@ -33,11 +33,11 @@
     </v-container>
   </div>
 </template>
-<style scoped>
-</style>
+
 <script>
 import Confirmation from "@/components/Confirmation";
 import { bus } from "@/plugins/bus.js";
+import { storeCaixa, storeControleCaixa } from "@/services/caixa";
 
 export default {
   name: "Caixa",
@@ -45,7 +45,8 @@ export default {
   data() {
     return {
       valorInicial: "",
-      confirmation: null
+      confirmation: null,
+      errors: []
     };
   },
 
@@ -60,6 +61,23 @@ export default {
   methods: {
     abrirCaixa() {
       console.log(this.valorInicial)
+      storeControleCaixa()
+        .then(res => {
+          this.controleCaixa = res.data.cd_ControleCaixa;
+          storeCaixa({
+            cd_ControleCaixa: res.data.cd_ControleCaixa,
+            vl_CaixaInicial: this.valorInicial
+          })
+            .then(res => {
+              this.caixa = res.data;
+              this.$router.push({
+                name: "Caixa Aberto",
+                params: { caixaId: res.data.cd_Caixa }
+              });
+            })
+            .catch(err => this.errors.push(err.response));
+        })
+        .catch(err => this.errors.push(err.response));
     },
     confirm() {
       bus.$emit('toggle', true);
