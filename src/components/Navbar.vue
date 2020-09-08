@@ -21,8 +21,8 @@
           <v-avatar size="100">
             <img src="https://avatars1.githubusercontent.com/u/37179593?s=460&u=49c29fed6531de1a1e09fed0ff13d2582033d060&v=4" alt="Usuário Avatar">
           </v-avatar>
-          <p class="black--text subheading mt-1">Matheus Mazoni</p>
         </v-flex>
+        <p class="black--text subheading mt-1">Matheus Mazoni</p>
       </v-layout>
       <v-list>
         <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
