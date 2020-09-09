@@ -5,7 +5,7 @@
       <v-row dense align="center" justify="center">
         <v-col cols="4">
           <v-card color="pa-3 mt-5">
-            <v-card-title class="subheading d-flex justify-center">Caixa Inicial</v-card-title>
+            <v-card-title class="dark_gray--text subheading d-flex justify-center">Caixa Inicial</v-card-title>
             <v-card-actions>
               <v-container fluid class>
                 <v-row align="center" justify="center">
@@ -17,7 +17,7 @@
                         prepend-inner-icon="local_atm"
                         label="Insira o valor"
                       ></v-text-field>
-                      <v-btn text color="#ecc30b" block @click.stop="confirm">
+                      <v-btn text color="secondary" block @click.stop="confirm">
                         <span>Abrir Caixa</span>
                         <v-icon small right>lock_open</v-icon>
                       </v-btn>

@@ -7,9 +7,9 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="primary darken-1" text @click="runConfirmation(false)">Não</v-btn>
+          <v-btn color="secondary darken-1" text @click="runConfirmation(false)">Não</v-btn>
 
-          <v-btn color="primary darken-1" text @click="runConfirmation(true)">Sim</v-btn>
+          <v-btn color="secondary darken-1" text @click="runConfirmation(true)">Sim</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

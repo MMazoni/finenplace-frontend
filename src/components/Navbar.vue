@@ -15,14 +15,14 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app class="yellow lighten-1">
+    <v-navigation-drawer v-model="drawer" app class="primary lighten-1">
       <v-layout column align-center>
         <v-flex class="mt-5">
           <v-avatar size="100">
             <img src="https://avatars1.githubusercontent.com/u/37179593?s=460&u=49c29fed6531de1a1e09fed0ff13d2582033d060&v=4" alt="Usuário Avatar">
           </v-avatar>
         </v-flex>
-        <p class="black--text subheading mt-1">Matheus Mazoni</p>
+        <p class="dark_gray--text subheading mt-1">Matheus Mazoni</p>
       </v-layout>
       <v-list>
         <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
@@ -30,7 +30,7 @@
             <v-icon>{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{ link.text }}</v-list-item-title>
+            <v-list-item-title class="dark_gray--text">{{ link.text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
