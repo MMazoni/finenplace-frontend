@@ -1,6 +1,6 @@
 import axios from "./config";
 
-export const getDespesasByCaixa = caixaId => axios.get(`despesa/caixa/${caixaId}`);
+export const getDespesasByCaixa = caixaId => axios.get(`despesa/caixa/${caixaId}/`);
 
 export const storeDespesas = data =>  {
   console.log(data);
@@ -11,7 +11,7 @@ export const storeDespesas = data =>  {
   });
 }
 
-export const getTipoDespesas = () => axios.get("despesa/tipo");
+export const getTipoDespesas = () => axios.get("despesa/tipo/");
 
 export const storeTipoDespesas = data => axios.post("despesa/tipo/", {
     ds_DespesaTipo: data.tipoDespesa

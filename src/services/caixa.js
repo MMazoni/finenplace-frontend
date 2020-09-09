@@ -1,15 +1,15 @@
 
 import axios from "./config";
 
-export const getCaixas = () =>  axios.get("caixa");
+export const getCaixas = () =>  axios.get("caixa/");
 
-export const showCaixa = id => axios.get(`caixa/${id}`);
+export const showCaixa = id => axios.get(`caixa/${id}/`);
 
-export const getControleCaixas = () => axios.get("controle");
+export const getControleCaixas = () => axios.get("controle/");
 
-export const showControleCaixa = id => axios.get(`controle/${id}`);
+export const showControleCaixa = id => axios.get(`controle/${id}/`);
 
-export const storeControleCaixa = () => axios.post("controle");
+export const storeControleCaixa = () => axios.post("controle/");
 
 export const storeCaixa = data => {
     console.log(data);

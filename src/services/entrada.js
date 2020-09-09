@@ -1,6 +1,6 @@
 import axios from "./config";
 
-export const getEntradasByCaixa = caixaId => axios.get(`entrada/caixa/${caixaId}`);
+export const getEntradasByCaixa = caixaId => axios.get(`entrada/caixa/${caixaId}/`);
 
 export const storeEntradas = data => axios.post("entrada/", {
     cd_Caixa: data.idCaixa,
