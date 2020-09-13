@@ -12,9 +12,6 @@ Vue.use(VueRouter)
   {
     path: "/caixa",
     name: "Caixa",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Caixa.vue")
   },
@@ -33,9 +30,6 @@ Vue.use(VueRouter)
   {
     path: "/equipe",
     name: "Equipe",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Equipe.vue")
   },
