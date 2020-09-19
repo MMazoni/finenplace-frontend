@@ -1,75 +1,165 @@
 <template>
   <div class="caixa-aberto">
     <v-subheader class="grey--text">Fechamento</v-subheader>
-      <v-container class="my-5 pt-5">
-        <v-row dense align="center" justify="center">
-          <v-col cols="6" lg="8">
+    <v-container class="my-5 pt-5">
+      <v-row dense align="center" justify="center">
+        <v-col cols="6" lg="8">
+          <v-form @submit.prevent="confirm">
+            <v-text-field prefix="R$" v-model="dinheiro" label="Dinheiro em caixa" required></v-text-field>
 
-            <v-form @submit.prevent="">
-          <v-text-field 
-            v-model="dinheiro"
-            label="Dinheiro em caixa"
-            required
-          ></v-text-field>
+            <v-text-field prefix="R$" v-model="credito" label="Cartão de crédito" required></v-text-field>
 
-          <v-text-field
-            v-model="credito"
-            label="Cartão de crédito"
-            required
-          ></v-text-field>
+            <v-text-field prefix="R$" v-model="debito" label="Cartão de débito" required></v-text-field>
 
-          <v-text-field
-            v-model="debito"
-            label="Cartão de débito"
-            required
-          ></v-text-field>
+            <v-text-field prefix="R$" v-model="refeicao" label="Vale refeição" required></v-text-field>
 
-          <v-text-field
-            v-model="refeicao"
-            label="Vale refeição"
-            required
-          ></v-text-field>
+            <v-text-field prefix="R$" v-model="online" label="Valor Online" required></v-text-field>
 
-          <v-text-field
-            v-model="online"
-            label="Valor Online"
-            required
-          ></v-text-field>
-
-          <v-row justify="end">
-            <v-btn
-            color="secondary"
-            type="submit"
-            right
-          >Fechar Caixa</v-btn>
-          </v-row>
-        </v-form>
-          </v-col>
-
-        </v-row>
-        
-          
-        
-      </v-container>
+            <v-row justify="end">
+              <v-btn color="secondary" type="submit" right>Fechar Caixa</v-btn>
+            </v-row>
+          </v-form>
+        </v-col>
+      </v-row>
+    </v-container>
+    <Confirmation />
   </div>
 </template>
 <script>
+import Confirmation from "@/components/Confirmation";
+import { bus } from "@/plugins/bus.js";
+import { showCaixa, fecharCaixa } from "@/services/caixa";
+import { getDespesasByCaixa } from "@/services/despesa";
+import { getSangriasByCaixa } from "@/services/sangria";
+import { getEntradasByCaixa } from "@/services/entrada";
+
 export default {
   name: "Fechamento",
+  components: { Confirmation },
   data: () => ({
     caixa: {},
-    dinheiro: 0,
-    credito: 0,
-    debito: 0,
-    refeicao: 0,
-    online: 0,
+    dinheiro: "",
+    credito: "",
+    debito: "",
+    refeicao: "",
+    online: "",
     sangrias: [],
     sangriaTotal: 0,
     entradas: [],
     entradaTotal: 0,
     despesas: [],
     despesaTotal: 0,
-    errors: []
+    errors: [],
+    confirmation: null,
   }),
-}
+
+  watch: {
+    confirmation(value) {
+      if (value === true) {
+        this.fechamento();
+      }
+    },
+  },
+
+  computed: {
+    faturamento() {
+      return (
+        parseFloat(this.dinheiro) +
+        parseFloat(this.credito) +
+        parseFloat(this.debito) +
+        parseFloat(this.refeicao) +
+        parseFloat(this.online) +
+        this.sangriaTotal +
+        this.despesaTotal -
+        parseFloat(this.caixa.vl_CaixaInicial) -
+        this.entradaTotal
+      );
+    },
+  },
+
+  methods: {
+    fechamento() {
+      //POST 'Fecha o caixa e faz as contas gerando o faturamento, retorna o faturamento'
+      console.log(this.faturamento);
+      fecharCaixa(this.$route.params.caixaId, {
+        dinheiro: this.dinheiro,
+        credito: this.credito,
+        debito: this.debito,
+        refeicao: this.refeicao,
+        online: this.online,
+        sangrias: this.sangriaTotal,
+        despesas: this.despesaTotal,
+        entradas: this.entradaTotal,
+        faturamento: this.faturamento,
+      })
+        .then((res) => {
+          console.log(res);
+          this.$router.push({ name: "Caixa" });
+          /* this.$swal(
+              "Caixa Fechado!",
+              `Faturamento de R$ ${this.faturamento.toFixed(2)}`,
+              "success"
+            )
+              .then(value => {
+                if (value) {
+                  
+                }  */
+        })
+        .catch((err) => this.errors.push(err.response));
+    },
+
+    async fetchSangrias() {
+      // GET 'Lista todas as sangrias pelo id do caixa'
+      await getSangriasByCaixa(this.$route.params.caixaId)
+        .then((res) => (this.sangrias = res.data))
+        .catch((err) => this.errors.push(err.response));
+      await this.sangrias.reduce(
+        (acc, value) => (this.sangriaTotal += parseFloat(value.vl_Sangria)),
+        {}
+      );
+    },
+    async fetchEntradas() {
+      // GET 'Lista todas as entradas pelo id do caixa'
+      await getEntradasByCaixa(this.$route.params.caixaId)
+        .then((res) => (this.entradas = res.data))
+        .catch((err) => this.errors.push(err.response));
+      await this.entradas.reduce(
+        (acc, value) => (this.entradaTotal += parseFloat(value.vl_Entrada)),
+        {}
+      );
+    },
+    async fetchDespesas() {
+      // GET 'Lista todas as despesas pelo id do caixa'
+      await getDespesasByCaixa(this.$route.params.caixaId)
+        .then(res => { this.despesas = res.data; console.log(res.data) })
+        .catch((err) => this.errors.push(err.response));
+      await this.despesas.reduce(
+        (acc, value) => (this.despesaTotal += parseFloat(value.vl_Despesa)),
+        {}
+      );
+    },
+    fetchCaixa() {
+      // GET 'Exibe o caixa pelo seu id'
+      showCaixa(this.$route.params.caixaId)
+        .then((res) => (this.caixa = res.data))
+        .catch((err) => this.error.push(err.response));
+    },
+    confirm() {
+      bus.$emit('toggle', true);
+    }
+  },
+
+  created() {
+    bus.$on("runConfirmation", data => {
+      this.confirmation = data;
+    });
+  },
+
+  mounted() {
+    this.fetchCaixa();
+    this.fetchSangrias();
+    this.fetchEntradas();
+    this.fetchDespesas();
+  },
+};
 </script>
