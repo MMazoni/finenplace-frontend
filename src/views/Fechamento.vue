@@ -5,15 +5,20 @@
       <v-row dense align="center" justify="center">
         <v-col cols="6" lg="8">
           <v-form @submit.prevent="confirm">
-            <v-text-field prefix="R$" v-model="dinheiro" label="Dinheiro em caixa" required></v-text-field>
+            <v-text-field
+              v-model.lazy="dinheiro"
+              v-money="money"
+              label="Dinheiro em caixa"
+              required
+            ></v-text-field>
 
-            <v-text-field prefix="R$" v-model="credito" label="Cartão de crédito" required></v-text-field>
+            <v-text-field v-model.lazy="credito" v-money="money" label="Cartão de crédito" required></v-text-field>
 
-            <v-text-field prefix="R$" v-model="debito" label="Cartão de débito" required></v-text-field>
+            <v-text-field v-model.lazy="debito" v-money="money" label="Cartão de débito" required></v-text-field>
 
-            <v-text-field prefix="R$" v-model="refeicao" label="Vale refeição" required></v-text-field>
+            <v-text-field v-model.lazy="refeicao" v-money="money" label="Vale refeição" required></v-text-field>
 
-            <v-text-field prefix="R$" v-model="online" label="Valor Online" required></v-text-field>
+            <v-text-field v-model.lazy="online" v-money="money" label="Valor Online" required></v-text-field>
 
             <v-row justify="end">
               <v-btn color="secondary" type="submit" right>Fechar Caixa</v-btn>
@@ -32,6 +37,7 @@ import { showCaixa, fecharCaixa } from "@/services/caixa";
 import { getDespesasByCaixa } from "@/services/despesa";
 import { getSangriasByCaixa } from "@/services/sangria";
 import { getEntradasByCaixa } from "@/services/entrada";
+import { VMoney } from "v-money";
 
 export default {
   name: "Fechamento",
@@ -51,6 +57,13 @@ export default {
     despesaTotal: 0,
     errors: [],
     confirmation: null,
+    money: {
+      decimal: ",",
+      thousands: ".",
+      prefix: "R$ ",
+      precision: 2,
+      masked: false,
+    },
   }),
 
   watch: {
@@ -64,11 +77,11 @@ export default {
   computed: {
     faturamento() {
       return (
-        parseFloat(this.dinheiro) +
-        parseFloat(this.credito) +
-        parseFloat(this.debito) +
-        parseFloat(this.refeicao) +
-        parseFloat(this.online) +
+        this.turnNumber(this.dinheiro) +
+        this.turnNumber(this.credito) +
+        this.turnNumber(this.debito) +
+        this.turnNumber(this.refeicao) +
+        this.turnNumber(this.online) +
         this.sangriaTotal +
         this.despesaTotal -
         parseFloat(this.caixa.vl_CaixaInicial) -
@@ -76,6 +89,8 @@ export default {
       );
     },
   },
+
+  directives: { money: VMoney },
 
   methods: {
     fechamento() {
@@ -94,18 +109,17 @@ export default {
       })
         .then((res) => {
           console.log(res);
-          this.$router.push({ name: "Caixa" });
-          /* this.$swal(
-              "Caixa Fechado!",
-              `Faturamento de R$ ${this.faturamento.toFixed(2)}`,
-              "success"
-            )
-              .then(value => {
-                if (value) {
-                  
-                }  */
+          this.$router.push({
+            name: "Caixa",
+            params: { alert: true },
+          });
         })
         .catch((err) => this.errors.push(err.response));
+    },
+
+    turnNumber(string) {
+      const withoutDollar = string.split(" ");
+      return parseFloat(withoutDollar[1].replaceAll(".", "").replace(",", "."));
     },
 
     async fetchSangrias() {
@@ -131,7 +145,10 @@ export default {
     async fetchDespesas() {
       // GET 'Lista todas as despesas pelo id do caixa'
       await getDespesasByCaixa(this.$route.params.caixaId)
-        .then(res => { this.despesas = res.data; console.log(res.data) })
+        .then((res) => {
+          this.despesas = res.data;
+          console.log(res.data);
+        })
         .catch((err) => this.errors.push(err.response));
       await this.despesas.reduce(
         (acc, value) => (this.despesaTotal += parseFloat(value.vl_Despesa)),
@@ -145,12 +162,12 @@ export default {
         .catch((err) => this.error.push(err.response));
     },
     confirm() {
-      bus.$emit('toggle', true);
-    }
+      bus.$emit("toggle", true);
+    },
   },
 
   created() {
-    bus.$on("runConfirmation", data => {
+    bus.$on("runConfirmation", (data) => {
       this.confirmation = data;
     });
   },
