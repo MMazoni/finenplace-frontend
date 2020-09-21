@@ -1,5 +1,15 @@
 <template>
   <div class="caixa">
+    <v-alert
+      v-model="alert"
+      color="success"
+      text
+      outlined
+      dark
+      dismissible
+    >
+    Caixa fechado com sucesso.
+    </v-alert>
     <v-subheader class="grey--text">Caixa</v-subheader>
     <v-container class="my-5 pt-5">
       <v-row dense align="center" justify="center">
@@ -46,7 +56,8 @@ export default {
     return {
       valorInicial: "",
       confirmation: null,
-      errors: []
+      errors: [],
+      alert: true
     };
   },
 
