@@ -1,5 +1,13 @@
 <template>
   <div class="caixa">
+    <v-snackbar
+      v-model="alert"
+      top
+      color="success"
+      timeout="3000"
+    >
+    Caixa fechado com sucesso.
+    </v-snackbar>
     <v-subheader class="grey--text">Caixa</v-subheader>
     <v-container class="my-5 pt-5">
       <v-row dense align="center" justify="center">
@@ -10,14 +18,14 @@
               <v-container fluid class>
                 <v-row align="center" justify="center">
                   <v-col cols="7">
-                    <v-form>
+                    <v-form @submit.prevent="confirm"> 
                       <v-text-field
                         v-model="valorInicial"
                         class="mt-0 pt-0"
                         prepend-inner-icon="local_atm"
                         label="Insira o valor"
                       ></v-text-field>
-                      <v-btn text color="secondary" block @click.stop="confirm">
+                      <v-btn text color="secondary" block type="submit">
                         <span>Abrir Caixa</span>
                         <v-icon small right>lock_open</v-icon>
                       </v-btn>
@@ -46,7 +54,8 @@ export default {
     return {
       valorInicial: "",
       confirmation: null,
-      errors: []
+      errors: [],
+      alert: this.$route.params.alert
     };
   },
 
