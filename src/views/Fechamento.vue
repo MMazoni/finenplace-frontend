@@ -86,7 +86,7 @@ export default {
         this.despesaTotal -
         parseFloat(this.caixa.vl_CaixaInicial) -
         this.entradaTotal
-      );
+      ).toFixed(2);
     },
   },
 
@@ -97,11 +97,11 @@ export default {
       //POST 'Fecha o caixa e faz as contas gerando o faturamento, retorna o faturamento'
       console.log(this.faturamento);
       fecharCaixa(this.$route.params.caixaId, {
-        dinheiro: this.dinheiro,
-        credito: this.credito,
-        debito: this.debito,
-        refeicao: this.refeicao,
-        online: this.online,
+        dinheiro: this.turnNumber(this.dinheiro),
+        credito: this.turnNumber(this.credito),
+        debito: this.turnNumber(this.debito),
+        refeicao: this.turnNumber(this.refeicao),
+        online: this.turnNumber(this.online),
         sangrias: this.sangriaTotal,
         despesas: this.despesaTotal,
         entradas: this.entradaTotal,

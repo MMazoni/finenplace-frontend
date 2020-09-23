@@ -4,9 +4,9 @@
     <v-container class="my-5 pt-5">
       <v-row>
         <v-col cols="11" md="3" class="mr-5 pr-5">
-          <v-form>
+          <v-form @submit.prevent="addToList('entrada')">
             <v-text-field v-model="entrada" label="Entrada"></v-text-field>
-            <v-btn text icon color="secondary" @click="addToList('entrada')">
+            <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
             </v-btn>
           </v-form>
@@ -17,7 +17,7 @@
         </v-col>
 
         <v-col cols="11" md="3" class="mr-5 pr-5">
-          <v-form>
+          <v-form @submit.prevent="addToList('despesa')">
             <v-select
               v-model="tipoDespesa"
               :items="tipoDespesas"
@@ -27,7 +27,7 @@
               required
             ></v-select>
             <v-text-field v-model="despesa" label="Despesa"></v-text-field>
-            <v-btn text icon color="secondary" @click="addToList('despesa')">
+            <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
             </v-btn>
           </v-form>
@@ -38,9 +38,9 @@
         </v-col>
 
         <v-col cols="12" md="3" class="mr-5 pr-5">
-          <v-form>
+          <v-form @submit.prevent="addToList('sangria')">
             <v-text-field v-model="sangria" label="Sangria"></v-text-field>
-            <v-btn text icon color="secondary" @click="addToList('sangria')">
+            <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
             </v-btn>
           </v-form>
