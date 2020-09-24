@@ -20,7 +20,8 @@
                   <v-col cols="7">
                     <v-form @submit.prevent="confirm"> 
                       <v-text-field
-                        v-model="valorInicial"
+                        v-model.lazy="valorInicial"
+                        v-money="money"
                         class="mt-0 pt-0"
                         prepend-inner-icon="local_atm"
                         label="Insira o valor"
@@ -45,7 +46,8 @@
 <script>
 import Confirmation from "@/components/Confirmation";
 import { bus } from "@/plugins/bus.js";
-import { storeCaixa, storeControleCaixa } from "@/services/caixa";
+import { storeCaixa, storeControleCaixa, turnNumber } from "@/services/caixa";
+import { VMoney } from "v-money";
 
 export default {
   name: "Caixa",
@@ -55,7 +57,14 @@ export default {
       valorInicial: "",
       confirmation: null,
       errors: [],
-      alert: this.$route.params.alert
+      alert: this.$route.params.alert,
+      money: {
+        decimal: ",",
+        thousands: ".",
+        prefix: "R$ ",
+        precision: 2,
+        masked: false,
+      },
     };
   },
 
@@ -67,6 +76,8 @@ export default {
     }
   },
 
+  directives: { money: VMoney },
+
   methods: {
     abrirCaixa() {
       console.log(this.valorInicial)
@@ -75,7 +86,7 @@ export default {
           this.controleCaixa = res.data.cd_ControleCaixa;
           storeCaixa({
             cd_ControleCaixa: res.data.cd_ControleCaixa,
-            vl_CaixaInicial: this.valorInicial
+            vl_CaixaInicial: turnNumber(this.valorInicial)
           })
             .then(res => {
               this.caixa = res.data;

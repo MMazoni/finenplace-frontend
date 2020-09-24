@@ -5,7 +5,7 @@
       <v-row>
         <v-col cols="11" md="3" class="mr-5 pr-5">
           <v-form @submit.prevent="addToList('entrada')">
-            <v-text-field v-model="entrada" label="Entrada"></v-text-field>
+            <v-text-field v-model.lazy="entrada" v-money="money" ref="entrada" label="Entrada"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
             </v-btn>
@@ -26,7 +26,7 @@
               label="Tipo"
               required
             ></v-select>
-            <v-text-field v-model="despesa" label="Despesa"></v-text-field>
+            <v-text-field v-model.lazy="despesa" v-money="money" ref="despesa" label="Despesa"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
             </v-btn>
@@ -39,7 +39,7 @@
 
         <v-col cols="12" md="3" class="mr-5 pr-5">
           <v-form @submit.prevent="addToList('sangria')">
-            <v-text-field v-model="sangria" label="Sangria"></v-text-field>
+            <v-text-field v-model.lazy="sangria" v-money="money" ref="sangria" label="Sangria"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
             </v-btn>
@@ -68,10 +68,11 @@
 <script>
 import Confirmation from "@/components/Confirmation";
 import { bus } from "@/plugins/bus.js";
-import { showCaixa } from "@/services/caixa";
+import { showCaixa, turnNumber } from "@/services/caixa";
 import { getTipoDespesas, storeDespesas } from "@/services/despesa";
 import { storeSangrias } from "@/services/sangria";
 import { storeEntradas } from "@/services/entrada";
+import { VMoney } from "v-money";
 
 export default {
   name: "CaixaAberto",
@@ -86,6 +87,13 @@ export default {
     items: [],
     despesa: "",
     sangria: "",
+    money: {
+      decimal: ",",
+      thousands: ".",
+      prefix: "R$ ",
+      precision: 2,
+      masked: false,
+    },
   }),
 
   watch: {
@@ -95,6 +103,8 @@ export default {
       }
     },
   },
+
+  directives: { money: VMoney },
 
   methods: {
     addToList(category) {
@@ -117,10 +127,15 @@ export default {
       this.cleanFields();
     },
     cleanFields() {
-      this.entrada = "";
+      const inputs = {
+        entrada: this.$refs.entrada.$el.querySelector('input'),
+        despesa: this.$refs.despesa.$el.querySelector('input'),
+        sangria: this.$refs.sangria.$el.querySelector('input')
+      }
+      inputs.entrada.value = "R$ 0.00";
       this.tipoDespesa = 0;
-      this.despesa = "";
-      this.sangria = "";
+      inputs.despesa.value = "R$ 0.00";
+      inputs.sangria.value = "R$ 0.00";
     },
     removeItem(id) {
       this.items.splice(id, 1);
@@ -150,7 +165,7 @@ export default {
         if (element.categoria === "Entrada") {
           storeEntradas({
             idCaixa: this.$route.params.caixaId,
-            entrada: element.valor,
+            entrada: turnNumber(element.valor),
           })
             .then((res) => {
               console.log(res.data);
@@ -160,7 +175,7 @@ export default {
           storeDespesas({
             idCaixa: this.$route.params.caixaId,
             idTipo: element.tipo,
-            despesa: element.valor,
+            despesa: turnNumber(element.valor),
           })
             .then((res) => {
               console.log(res.data);
@@ -169,7 +184,7 @@ export default {
         } else if (element.categoria === "Sangria") {
           storeSangrias({
             idCaixa: this.$route.params.caixaId,
-            sangria: element.valor,
+            sangria: turnNumber(element.valor),
           })
             .then((res) => {
               console.log(res.data);

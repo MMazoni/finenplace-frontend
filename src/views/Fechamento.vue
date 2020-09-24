@@ -33,7 +33,7 @@
 <script>
 import Confirmation from "@/components/Confirmation";
 import { bus } from "@/plugins/bus.js";
-import { showCaixa, fecharCaixa } from "@/services/caixa";
+import { showCaixa, fecharCaixa, turnNumber } from "@/services/caixa";
 import { getDespesasByCaixa } from "@/services/despesa";
 import { getSangriasByCaixa } from "@/services/sangria";
 import { getEntradasByCaixa } from "@/services/entrada";
@@ -77,11 +77,11 @@ export default {
   computed: {
     faturamento() {
       return (
-        this.turnNumber(this.dinheiro) +
-        this.turnNumber(this.credito) +
-        this.turnNumber(this.debito) +
-        this.turnNumber(this.refeicao) +
-        this.turnNumber(this.online) +
+        turnNumber(this.dinheiro) +
+        turnNumber(this.credito) +
+        turnNumber(this.debito) +
+        turnNumber(this.refeicao) +
+        turnNumber(this.online) +
         this.sangriaTotal +
         this.despesaTotal -
         parseFloat(this.caixa.vl_CaixaInicial) -
@@ -97,11 +97,11 @@ export default {
       //POST 'Fecha o caixa e faz as contas gerando o faturamento, retorna o faturamento'
       console.log(this.faturamento);
       fecharCaixa(this.$route.params.caixaId, {
-        dinheiro: this.turnNumber(this.dinheiro),
-        credito: this.turnNumber(this.credito),
-        debito: this.turnNumber(this.debito),
-        refeicao: this.turnNumber(this.refeicao),
-        online: this.turnNumber(this.online),
+        dinheiro: turnNumber(this.dinheiro),
+        credito: turnNumber(this.credito),
+        debito: turnNumber(this.debito),
+        refeicao: turnNumber(this.refeicao),
+        online: turnNumber(this.online),
         sangrias: this.sangriaTotal,
         despesas: this.despesaTotal,
         entradas: this.entradaTotal,
@@ -115,11 +115,6 @@ export default {
           });
         })
         .catch((err) => this.errors.push(err.response));
-    },
-
-    turnNumber(string) {
-      const withoutDollar = string.split(" ");
-      return parseFloat(withoutDollar[1].replaceAll(".", "").replace(",", "."));
     },
 
     async fetchSangrias() {

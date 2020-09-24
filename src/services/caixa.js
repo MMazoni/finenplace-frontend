@@ -1,4 +1,3 @@
-
 import axios from "./config";
 
 export const getCaixas = () =>  axios.get("caixa/");
@@ -31,4 +30,17 @@ export const storeCaixa = data => {
       vl_Entradas: data.entradas,
       vl_Faturamento: data.faturamento
     });
+}
+
+export const turnNumber = (string) => {
+  const withoutDollar = string.split(" ");
+  return parseFloat(withoutDollar[1].replaceAll(".", "").replace(",", "."));
+}
+
+export const money =  {
+  decimal: ",",
+  thousands: ".",
+  prefix: "R$ ",
+  precision: 2,
+  masked: false,
 }
