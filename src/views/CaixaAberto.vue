@@ -160,7 +160,6 @@ export default {
       bus.$emit("toggle", true);
     },
     salvarDados() {
-      console.log("eu2");
       this.items.forEach((element) => {
         if (element.categoria === "Entrada") {
           storeEntradas({
