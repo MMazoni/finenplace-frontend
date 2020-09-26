@@ -6,32 +6,48 @@ Vue.use(VueRouter)
   const routes = [
   {
     path: '/',
+    redirect: '/caixas',
     name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue')
+    component: () => import('../views/Dashboard.vue'),
+    children: [
+      {
+        path: "/caixas",
+        name: "ListaCaixas",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../views/ListaCaixas.vue")
+      },
+      {
+        path: "/caixa",
+        name: "Caixa",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../views/Caixa.vue")
+      },
+      {
+        path: "/caixa/:caixaId/aberto",
+        name: "Caixa Aberto",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../views/CaixaAberto.vue")
+      },
+      {
+        path: "/caixa/:caixaId/fechamento",
+        name: "Fechamento",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../views/Fechamento.vue")
+      },
+      {
+        path: "/equipe",
+        name: "Equipe",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../views/Equipe.vue")
+      },
+    ]
   },
   {
-    path: "/caixa",
-    name: "Caixa",
+    path: "/login",
+    name: "Login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Caixa.vue")
-  },
-  {
-    path: "/caixa/:caixaId/aberto",
-    name: "Caixa Aberto",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/CaixaAberto.vue")
-  },
-  {
-    path: "/caixa/:caixaId/fechamento",
-    name: "Fechamento",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Fechamento.vue")
-  },
-  {
-    path: "/equipe",
-    name: "Equipe",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Equipe.vue")
+      import(/* webpackChunkName: "about" */ "../views/Login.vue")
+      
   },
 ]
 
