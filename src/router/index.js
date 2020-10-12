@@ -46,8 +46,10 @@ Vue.use(VueRouter)
     path: "/login",
     name: "Login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue")
-      
+      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+    meta: {
+      allowAnonymous: true
+    }
   },
 ]
 

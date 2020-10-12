@@ -12,13 +12,20 @@
                 </v-toolbar-title>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form
+                  id="form"
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+                  @submit.prevent="logar()"
+                >
                   <v-text-field
                     v-model="email"
                     label="Email"
                     name="email"
+                    :rules="emailRegras"
                     prepend-icon="mdi-account"
-                    type="text"
+                    required
                   ></v-text-field>
 
                   <v-text-field
@@ -27,13 +34,20 @@
                     label="Senha"
                     name="password"
                     prepend-icon="mdi-lock"
+                    :rules="passwordRegras"
                     type="password"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn text color="secondary" type="submit">
+                <v-btn
+                  text
+                  color="secondary"
+                  type="submit"
+                  form="form"
+                  :disabled="!valid"
+                >
                   <span>Entrar</span>
                 </v-btn>
               </v-card-actions>
@@ -46,11 +60,39 @@
 </template>
 
 <script>
+import { login } from "@/services/auth";
+//import { axios as Usuario } from "@/services/config";
+
 export default {
   name: "Login",
   data: () => ({
+    valid: true,
     email: "",
-    password: ""
+    emailRegras: [
+      (v) => !!v || "Email é obrigatório",
+      //v => /.+@.+\..+/.test(v) || "É necessário um email válido"
+    ],
+    password: "",
+    passwordRegras: [(v) => !!v || "Senha é obrigatória"],
+    error: "",
   }),
+  methods: {
+    validar() {
+      this.$refs.form.validate();
+    },
+    logar() {
+      this.validar();
+      login({
+        email: this.email,
+        password: this.password,
+      })
+        .then((response) => {
+          //localStorage.setItem('key', response.data.token);
+          //this.$router.push('/');
+          alert(response.data.token);
+        })
+        .catch((erro) => (this.error = erro.response.data.message));
+    },
+  },
 };
 </script>
