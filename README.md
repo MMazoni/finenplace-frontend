@@ -14,7 +14,7 @@ Baixe o projeto ou dê `git clone` e entre no diretório.
 
 #### Front-end
 
-É necessário ter instalado o [node.js](https://nodejs.org/en/download/). Depois vá na pasta `frontend` pelo terminal e use o comando abaixo para instalar as dependências do node.
+É necessário ter instalado o [node.js](https://nodejs.org/en/download/). Na pasta raiz do projeto pelo terminal, use o comando abaixo para instalar as dependências do node.
 
 ```sh
 npm install
@@ -32,7 +32,7 @@ No terminal, escreva o comando:
 npm run serve
 ```
 
-Agora vá no navegador e coloque: `localhost:8080` 
+Agora vá no navegador e coloque: `localhost:8080`
 
 
 ## Integrantes do TCC
