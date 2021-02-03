@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     redirect: '/caixas',
@@ -14,31 +14,46 @@ Vue.use(VueRouter)
         path: "/caixas",
         name: "ListaCaixas",
         component: () =>
-          import(/* webpackChunkName: "about" */ "../views/ListaCaixas.vue")
+          import(/* webpackChunkName: "about" */ "../views/ListaCaixas.vue"),
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path: "/caixa",
         name: "Caixa",
         component: () =>
-          import(/* webpackChunkName: "about" */ "../views/Caixa.vue")
+          import(/* webpackChunkName: "about" */ "../views/Caixa.vue"),
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path: "/caixa/:caixaId/aberto",
         name: "Caixa Aberto",
         component: () =>
-          import(/* webpackChunkName: "about" */ "../views/CaixaAberto.vue")
+          import(/* webpackChunkName: "about" */ "../views/CaixaAberto.vue"),
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path: "/caixa/:caixaId/fechamento",
         name: "Fechamento",
         component: () =>
-          import(/* webpackChunkName: "about" */ "../views/Fechamento.vue")
+          import(/* webpackChunkName: "about" */ "../views/Fechamento.vue"),
+        meta: {
+          requiresAuth: false
+        }
       },
       {
         path: "/equipe",
         name: "Equipe",
         component: () =>
-          import(/* webpackChunkName: "about" */ "../views/Equipe.vue")
+          import(/* webpackChunkName: "about" */ "../views/Equipe.vue"),
+        meta: {
+          requiresAuth: true
+        }
       },
     ]
   },
@@ -48,7 +63,7 @@ Vue.use(VueRouter)
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Login.vue"),
     meta: {
-      allowAnonymous: true
+      requiresAuth: false
     }
   },
 ]
@@ -58,5 +73,20 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem('user') === null) {
+      next({
+        path: '/login',
+        params: { nextUrl: to.fullPath }
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router
