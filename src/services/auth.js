@@ -2,7 +2,7 @@ import axios from "./config";
 import router from '../router';
 
 export const login = data => {
-    return axios.post('login/', {
+    return axios.post('user/login', {
         username: data.email,
         password: data.password
     });
