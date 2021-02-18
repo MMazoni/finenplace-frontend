@@ -87,11 +87,8 @@ export default {
         password: this.password,
       })
         .then((response) => {
-          console.log(response)
-          alert()
           localStorage.setItem('key', response.data.token);
-          this.$router.push('/caixas');
-          alert(response.data.token);
+          this.$router.push({ name: 'Dashboard' });
         })
         .catch((erro) => (this.error = erro.response.data.message));
     },
