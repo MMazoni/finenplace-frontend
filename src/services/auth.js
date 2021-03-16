@@ -8,9 +8,9 @@ export const login = data => {
     });
 }
 
-export function logout(data){
-    localStorage.setItem(data,null);
-//    localStorage.setItem('role_id',null);
-    localStorage.setItem('id',null)
+export function logout(data) {
+    localStorage.setItem(data, null);
+    //    localStorage.setItem('role_id',null);
+    localStorage.setItem('id', null)
     router.push('login');
 }
