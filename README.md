@@ -34,6 +34,11 @@ npm run serve
 
 Agora vá no navegador e coloque: `localhost:8080`
 
+Usuário para teste:
+
+    email: admin@admin.com
+    senha: 1234
+
 
 ## Integrantes do TCC
 
