@@ -8,7 +8,10 @@ export const getControleCaixas = () => axios.get("controle/");
 
 export const showControleCaixa = id => axios.get(`controle/${id}/`);
 
-export const storeControleCaixa = () => axios.post("controle/");
+export const storeControleCaixa = (user_id, turno) => axios.post("controle/", {
+  user: user_id,
+  ds_TurnoCaixa: turno,
+});
 
 export const storeCaixa = data => {
     console.log(data);

@@ -40,14 +40,6 @@ Usuário para teste:
     senha: 1234
 
 
-## Integrantes do TCC
-
-* **Fábio Sales** - [fsalesalmeida](https://github.com/fsalesalmeida)
-* **Felipe Ramos** - [Feliperc7](https://github.com/Feliperc7)
-* **Henrique Berg** - [DoppelStrix](https://github.com/DoppelStrix)
-* **Matheus Mazoni** - [MMazoni](https://github.com/MMazoni)
-
-
 [vue-image]: https://img.shields.io/badge/vue-v2.6.11-green
 [vue-url]: https://vuejs.org/
 [cli-image]: https://img.shields.io/badge/cli-v4.5.0-yellow

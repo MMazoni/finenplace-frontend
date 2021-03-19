@@ -65,6 +65,7 @@ export default {
         precision: 2,
         masked: false,
       },
+      user_id: localStorage.getItem("user"),
     };
   },
 
@@ -81,7 +82,7 @@ export default {
   methods: {
     abrirCaixa() {
       console.log(this.valorInicial)
-      storeControleCaixa()
+      storeControleCaixa(this.user_id, "dia")
         .then(res => {
           this.controleCaixa = res.data.cd_ControleCaixa;
           storeCaixa({
@@ -107,6 +108,7 @@ export default {
     bus.$on("runConfirmation", data => {
       this.confirmation = data;
     });
+    console.log(this.user_id)
   }
 };
 </script>

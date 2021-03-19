@@ -99,6 +99,7 @@ export default {
       })
         .then((response) => {
           localStorage.setItem('key', response.data.token);
+          localStorage.setItem('user', response.data.user_id);
           this.$router.push({ name: 'Dashboard' });
         })
         .catch((erro) => (this.error = erro.response.data.message));
