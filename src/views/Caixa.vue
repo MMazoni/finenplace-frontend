@@ -18,7 +18,7 @@
               <v-container fluid class>
                 <v-row align="center" justify="center">
                   <v-col cols="7">
-                    <v-form @submit.prevent="confirm"> 
+                    <v-form @submit.prevent="confirm">
                       <v-text-field
                         v-model.lazy="valorInicial"
                         v-money="money"
