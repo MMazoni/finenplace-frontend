@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Confirmation.vue should snapshot 1`] = `
+<div class="row justify-center">
+  <div role="dialog" class="v-dialog__container">
+    <!---->
+  </div>
+</div>
+`;

@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar.vue should snapshot 1`] = `
+<nav>
+  <header class="v-sheet theme--light v-toolbar v-toolbar--flat v-app-bar v-app-bar--fixed" style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;">
+    <div class="v-toolbar__content" style="height: 64px;"><button type="button" class="v-app-bar__nav-icon grey--text v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">menu</i></span></button>
+      <div class="v-toolbar__title text-uppercase grey--text"><span class="font-weight-light">Finen</span> <span>Place</span></div>
+      <div class="spacer"></div> <button type="button" class="v-btn v-btn--text theme--light v-size--default grey--text"><span class="v-btn__content"><span>Sair</span> <i aria-hidden="true" class="v-icon notranslate v-icon--right material-icons theme--light">exit_to_app</i></span></button>
+    </div>
+  </header>
+  <nav class="primary lighten-1 v-navigation-drawer v-navigation-drawer--close v-navigation-drawer--fixed v-navigation-drawer--is-mobile theme--light" style="height: 100vh; top: 0px; transform: translateX(-100%); width: 256px;">
+    <div class="v-navigation-drawer__content">
+      <div class="layout column align-center">
+        <div class="flex mt-5">
+          <div class="v-avatar" style="height: 100px; min-width: 100px; width: 100px;"><img src="https://avatars1.githubusercontent.com/u/37179593?s=460&amp;u=49c29fed6531de1a1e09fed0ff13d2582033d060&amp;v=4" alt="Usuário Avatar"></div>
+        </div>
+        <p class="dark_gray--text subheading mt-1">Matheus Mazoni</p>
+      </div>
+      <div class="v-list v-sheet theme--light"><a tabindex="0" router="" class="v-list-item v-list-item--link theme--light">
+          <div class="v-list-item__action"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">dashboard</i></div>
+          <div class="v-list-item__content">
+            <div class="v-list-item__title dark_gray--text">Dashboard</div>
+          </div>
+        </a><a tabindex="0" router="" class="v-list-item v-list-item--link theme--light">
+          <div class="v-list-item__action"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">local_atm</i></div>
+          <div class="v-list-item__content">
+            <div class="v-list-item__title dark_gray--text">Caixa</div>
+          </div>
+        </a><a tabindex="0" router="" class="v-list-item v-list-item--link theme--light">
+          <div class="v-list-item__action"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">person</i></div>
+          <div class="v-list-item__content">
+            <div class="v-list-item__title dark_gray--text">Equipe</div>
+          </div>
+        </a></div>
+    </div>
+    <div class="v-navigation-drawer__border"></div>
+  </nav>
+</nav>
+`;
