@@ -20,7 +20,7 @@ export const storeCaixa = data => {
       vl_CaixaInicial: data.vl_CaixaInicial
     });
   }
-  
+
   export const fecharCaixa = (id, data) => {
     return axios.patch(`caixa/${id}/`, {
       vl_Dinheiro: data.dinheiro,

@@ -16,7 +16,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "about" */ "../views/ListaCaixas.vue"),
         meta: {
-          requiresAuth: true
+          requiresAuth: false
         }
       },
       {
@@ -25,7 +25,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "about" */ "../views/Caixa.vue"),
         meta: {
-          requiresAuth: true
+          requiresAuth: false
         }
       },
       {
@@ -34,7 +34,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "about" */ "../views/CaixaAberto.vue"),
         meta: {
-          requiresAuth: true
+          requiresAuth: false
         }
       },
       {
@@ -52,7 +52,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "about" */ "../views/Equipe.vue"),
         meta: {
-          requiresAuth: true
+          requiresAuth: false
         }
       },
     ]

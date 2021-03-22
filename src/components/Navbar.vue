@@ -47,7 +47,7 @@ export default {
       links: [
         {icon: 'dashboard', text: 'Dashboard', route: '/'},
         {icon: 'local_atm', text: 'Caixa', route: '/caixa'},
-        {icon: 'person', text: 'Equipe', route: '/equipe'}        
+        {icon: 'person', text: 'Equipe', route: '/equipe'}
       ]
     };
   },
