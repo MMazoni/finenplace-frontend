@@ -45,13 +45,18 @@
 
 <script>
 import Confirmation from "@/components/Confirmation";
-import { bus } from "@/plugins/bus.js";
+import { confirmation } from '../store.js';
 import { storeCaixa, storeControleCaixa, turnNumber } from "@/services/caixa";
 import { VMoney } from "v-money";
 
 export default {
   name: "Caixa",
   components: { Confirmation },
+  computed: {
+    dialog() {
+      return confirmation.confirm;
+    }
+  },
   data() {
     return {
       valorInicial: "",
@@ -70,7 +75,7 @@ export default {
   },
 
   watch: {
-    confirmation(value) {
+    dialog(value) {
       if (value === true) {
         this.abrirCaixa();
       }
@@ -82,6 +87,12 @@ export default {
   methods: {
     abrirCaixa() {
       console.log(this.valorInicial)
+      confirmation.dialog = false;
+              confirmation.confirm = false
+              this.$router.push({
+                name: "Caixa Aberto",
+                params: { caixaId: 1 }
+              });
       storeControleCaixa(this.user_id, "dia")
         .then(res => {
           this.controleCaixa = res.data.cd_ControleCaixa;
@@ -91,6 +102,8 @@ export default {
           })
             .then(res => {
               this.caixa = res.data;
+              confirmation.dialog = false;
+              confirmation.confirm = false
               this.$router.push({
                 name: "Caixa Aberto",
                 params: { caixaId: res.data.cd_Caixa }
@@ -101,14 +114,8 @@ export default {
         .catch(err => this.errors.push(err.response));
     },
     confirm() {
-      bus.$emit('toggle', true);
+      confirmation.dialog = true;
     }
   },
-  created() {
-    bus.$on("runConfirmation", data => {
-      this.confirmation = data;
-    });
-    console.log(this.user_id)
-  }
 };
 </script>
