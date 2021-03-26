@@ -101,10 +101,10 @@ export default {
                 params: { caixaId: res.data.cd_Caixa }
               });
             })
-            .catch(err => this.errors.push(err.response));
+            .catch(err => this.errors.push(err.response))
         })
         .catch(err => this.errors.push(err.response))
-        .then(() => { dialogConclude() });
+        .finally(() => { dialogConclude() });
     },
     confirm() {
       openDialog();

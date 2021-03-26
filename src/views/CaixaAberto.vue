@@ -156,12 +156,6 @@ export default {
         .catch((err) => this.error.push(err.response));
     },
     prepararFechamento() {
-      this.salvarDados();
-    },
-    confirm() {
-      openDialog();
-    },
-    salvarDados() {
       this.items.forEach((element) => {
         if (element.categoria === "Entrada") {
           storeEntradas({
@@ -199,6 +193,9 @@ export default {
         name: "Fechamento",
         params: { caixaId: this.$route.params.caixaId },
       });
+    },
+    confirm() {
+      openDialog();
     },
   },
 
