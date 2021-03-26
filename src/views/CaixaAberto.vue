@@ -67,7 +67,7 @@
 </template>
 <script>
 import Confirmation from "@/components/Confirmation";
-import { bus } from "@/plugins/bus.js";
+import { confirmation, dialogConclude, openDialog } from '../store.js';
 import { showCaixa, turnNumber } from "@/services/caixa";
 import { getTipoDespesas, storeDespesas } from "@/services/despesa";
 import { storeSangrias } from "@/services/sangria";
@@ -77,9 +77,13 @@ import { VMoney } from "v-money";
 export default {
   name: "CaixaAberto",
   components: { Confirmation },
+  computed: {
+    dialogConfirmation() {
+      return confirmation.confirm;
+    },
+  },
   data: () => ({
     caixa: {},
-    confirmation: null,
     id: 0,
     entrada: "",
     tipoDespesas: [],
@@ -97,7 +101,7 @@ export default {
   }),
 
   watch: {
-    confirmation(value) {
+    dialogConfirmation(value) {
       if (value === true) {
         this.prepararFechamento();
       }
@@ -142,13 +146,11 @@ export default {
       this.id -= 1;
     },
     fetchDespesaTipo() {
-      // GET "Lista todos os tipos de despesa"
       getTipoDespesas()
         .then((res) => (this.tipoDespesas = res.data))
         .catch((err) => this.error.push(err.response));
     },
     fetchCaixa() {
-      // GET 'Exibe o caixa pelo seu id'
       showCaixa(this.$route.params.caixaId)
         .then((res) => (this.caixa = res.data))
         .catch((err) => this.error.push(err.response));
@@ -157,7 +159,7 @@ export default {
       this.salvarDados();
     },
     confirm() {
-      bus.$emit("toggle", true);
+      openDialog();
     },
     salvarDados() {
       this.items.forEach((element) => {
@@ -191,6 +193,8 @@ export default {
             .catch((err) => this.error.push(err.response));
         }
       });
+      dialogConclude();
+      // [TODO] tirar esse router push daqui. Mesmo dando erro, vai mudar a rota!!
       this.$router.push({
         name: "Fechamento",
         params: { caixaId: this.$route.params.caixaId },
@@ -203,10 +207,5 @@ export default {
     this.fetchDespesaTipo();
   },
 
-  created() {
-    bus.$on("runConfirmation", (data) => {
-      this.confirmation = data;
-    });
-  },
 };
 </script>
