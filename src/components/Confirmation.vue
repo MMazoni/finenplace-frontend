@@ -17,23 +17,20 @@
 </template>
 
 <script>
-import { bus } from "@/plugins/bus.js";
+import { confirmation } from "../store.js";
 
 export default {
   name: "Confirmation",
-  data() {
-    return {
-      dialog: false,
-    };
-  },
-  methods: {
-    runConfirmation(confirmation) {
-      this.dialog = false;
-      bus.$emit('runConfirmation', confirmation);
+  computed: {
+    dialog() {
+      return confirmation.dialog;
     }
   },
-  created() {
-    bus.$on("toggle", (data) => (this.dialog = data));
+  methods: {
+    runConfirmation(enable) {
+      confirmation.dialog = enable;
+      confirmation.confirm = enable;
+    }
   },
 };
 </script>

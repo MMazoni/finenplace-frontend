@@ -32,7 +32,7 @@
 </template>
 <script>
 import Confirmation from "@/components/Confirmation";
-import { bus } from "@/plugins/bus.js";
+import { confirmation, dialogConclude, openDialog } from '../store.js';
 import { showCaixa, fecharCaixa, turnNumber } from "@/services/caixa";
 import { getDespesasByCaixa } from "@/services/despesa";
 import { getSangriasByCaixa } from "@/services/sangria";
@@ -56,7 +56,6 @@ export default {
     despesas: [],
     despesaTotal: 0,
     errors: [],
-    confirmation: null,
     money: {
       decimal: ",",
       thousands: ".",
@@ -67,7 +66,7 @@ export default {
   }),
 
   watch: {
-    confirmation(value) {
+    dialogConfirmation(value) {
       if (value === true) {
         this.fechamento();
       }
@@ -75,6 +74,9 @@ export default {
   },
 
   computed: {
+    dialogConfirmation() {
+      return confirmation.confirm;
+    },
     faturamento() {
       return (
         turnNumber(this.dinheiro) +
@@ -94,7 +96,6 @@ export default {
 
   methods: {
     fechamento() {
-      //POST 'Fecha o caixa e faz as contas gerando o faturamento, retorna o faturamento'
       console.log(this.faturamento);
       fecharCaixa(this.$route.params.caixaId, {
         dinheiro: turnNumber(this.dinheiro),
@@ -109,16 +110,17 @@ export default {
       })
         .then((res) => {
           console.log(res);
+          dialogConclude();
           this.$router.push({
             name: "Caixa",
             params: { alert: true },
           });
         })
-        .catch((err) => this.errors.push(err.response));
+        .catch((err) => this.errors.push(err.response))
+        .finally(() => { dialogConclude() });
     },
 
     async fetchSangrias() {
-      // GET 'Lista todas as sangrias pelo id do caixa'
       await getSangriasByCaixa(this.$route.params.caixaId)
         .then((res) => (this.sangrias = res.data))
         .catch((err) => this.errors.push(err.response));
@@ -128,7 +130,6 @@ export default {
       );
     },
     async fetchEntradas() {
-      // GET 'Lista todas as entradas pelo id do caixa'
       await getEntradasByCaixa(this.$route.params.caixaId)
         .then((res) => (this.entradas = res.data))
         .catch((err) => this.errors.push(err.response));
@@ -138,7 +139,6 @@ export default {
       );
     },
     async fetchDespesas() {
-      // GET 'Lista todas as despesas pelo id do caixa'
       await getDespesasByCaixa(this.$route.params.caixaId)
         .then((res) => {
           this.despesas = res.data;
@@ -151,20 +151,13 @@ export default {
       );
     },
     fetchCaixa() {
-      // GET 'Exibe o caixa pelo seu id'
       showCaixa(this.$route.params.caixaId)
         .then((res) => (this.caixa = res.data))
         .catch((err) => this.error.push(err.response));
     },
     confirm() {
-      bus.$emit("toggle", true);
+      openDialog();
     },
-  },
-
-  created() {
-    bus.$on("runConfirmation", (data) => {
-      this.confirmation = data;
-    });
   },
 
   mounted() {
