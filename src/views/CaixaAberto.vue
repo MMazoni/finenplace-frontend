@@ -17,12 +17,13 @@
         </v-col>
 
         <v-col cols="11" md="3" class="mr-5 pr-5">
-          <v-form @submit.prevent="addToList('despesa')">
+          <v-form @change="console.log(this.despesaTipo)" @submit.prevent="addToList('despesa')">
             <v-select
               v-model="tipoDespesa"
               :items="tipoDespesas"
-              item-text="ds_DespesaTipo"
               ref="tipos"
+              item-text="tipo"
+              item-value="id"
               label="Tipo"
               required
             ></v-select>
@@ -51,7 +52,7 @@
         <v-col cols="12">
           <v-list v-for="item in items" :key="items.indexOf(item)">
             <v-flex justify="end" class="py-0 my-0 border-bottom">
-              <v-list-item class="py-0 my-0">- {{ item.categoria }} | R$ {{ item.valor }}</v-list-item>
+              <v-list-item class="py-0 my-0">- {{ item.categoria }} | {{ item.valor }}</v-list-item>
               <v-list-item-action class="py-0 my-0">
                 <v-btn icon color="red" class="mr-3" @click="removeItem(items.indexOf(item))">
                   <v-icon>remove_circle_outline</v-icon>
@@ -98,6 +99,7 @@ export default {
       precision: 2,
       masked: false,
     },
+    error: []
   }),
 
   watch: {
@@ -112,6 +114,8 @@ export default {
 
   methods: {
     addToList(category) {
+      console.log("tipo: ", this.tipoDespesa)
+      console.log("refs: ", this.$refs.tipos.selectedItems[0])
       const capitalizedCategory =
         category.charAt(0).toUpperCase() + category.slice(1);
       this.$set(this.items, this.id, {
@@ -122,10 +126,10 @@ export default {
       if (category === "despesa") {
         this.items[
           this.id
-        ].categoria = `${this.$refs.tipos.selectedItems[0].ds_DespesaTipo}(despesa)`;
+        ].categoria = `${this.$refs.tipos.selectedItems[0].tipo}(despesa)`;
         this.items[this.id][
           "tipo"
-        ] = this.$refs.tipos.selectedItems[0].cd_DespesaTipo;
+        ] = this.$refs.tipos.selectedItems[0].id;
       }
       this.id += 1;
       this.cleanFields();
@@ -147,8 +151,17 @@ export default {
     },
     fetchDespesaTipo() {
       getTipoDespesas()
-        .then((res) => (this.tipoDespesas = res.data))
-        .catch((err) => this.error.push(err.response));
+        .then(response => {
+          // console.log("Response: ", response.data)
+          // response.data.reduce((accumulator, currentValue) => {
+          //   let { id, tipo } = currentValue;
+          //   this.tipoDespesas.push({id, tipo});
+          //   return;
+          // }, []);
+          this.tipoDespesas = response.data;
+          console.log("Despesa: ", this.tipoDespesas);
+        })
+        .catch((error) => this.error.push(error.response));
     },
     fetchCaixa() {
       showCaixa(this.$route.params.caixaId)
