@@ -103,7 +103,7 @@ export default {
           dialogConclude();
           this.$router.push({
             name: "Caixa Aberto",
-            params: { caixaId: response.data.caixaId }
+            params: { caixaId: response.data.id }
           });
         })
         .catch(error => this.errors.push(error.response))

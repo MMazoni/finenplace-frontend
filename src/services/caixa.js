@@ -14,21 +14,13 @@ export const storeControleCaixa = (user_id, turno) => axios.post("controle/", {
 });
 
 export const abrirCaixa = data => {
-  let turno;
-  if (data.turno == 0) {
-    turno = 'manha';
-  } else if (data.turno == 1) {
-    turno = 'noite';
-  }
-
-  console.log(data);
 
   return axios.post("caixa/abertura", {
     funcionario: {
       id: data.funcionario
     },
     valorInicial: data.valorInicial,
-    turno: turno
+    turno: data.turno
   });
 }
 
