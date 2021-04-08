@@ -4,7 +4,7 @@
     <v-container class="my-5 pt-5">
       <v-row>
         <v-col cols="11" md="3" class="mr-5 pr-5">
-          <v-form @submit.prevent="addToList('entrada')">
+          <v-form @submit.prevent="saveEntrada()">
             <v-text-field v-model.lazy="entrada" v-money="money" ref="entrada" label="Entrada"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
@@ -17,7 +17,7 @@
         </v-col>
 
         <v-col cols="11" md="3" class="mr-5 pr-5">
-          <v-form @change="console.log(this.despesaTipo)" @submit.prevent="addToList('despesa')">
+          <v-form @submit.prevent="saveDespesa()">
             <v-select
               v-model="tipoDespesa"
               :items="tipoDespesas"
@@ -39,7 +39,7 @@
         </v-col>
 
         <v-col cols="12" md="3" class="mr-5 pr-5">
-          <v-form @submit.prevent="addToList('sangria')">
+          <v-form @submit.prevent="saveSangria()">
             <v-text-field v-model.lazy="sangria" v-money="money" ref="sangria" label="Sangria"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
@@ -68,7 +68,7 @@
 </template>
 <script>
 import Confirmation from "@/components/Confirmation";
-import { confirmation, dialogConclude, openDialog } from '../store.js';
+import { confirmation, dialogConclude, openDialog, confirm } from '../store.js';
 import { showCaixa, turnNumber } from "@/services/caixa";
 import { getTipoDespesas, storeDespesas } from "@/services/despesa";
 import { storeSangrias } from "@/services/sangria";
@@ -81,6 +81,9 @@ export default {
   computed: {
     dialogConfirmation() {
       return confirmation.confirm;
+    },
+    dialog() {
+      return confirmation.dialog;
     },
   },
   data: () => ({
@@ -105,7 +108,8 @@ export default {
   watch: {
     dialogConfirmation(value) {
       if (value === true) {
-        this.prepararFechamento();
+        console.log(value)
+        //this.prepararFechamento();
       }
     },
   },
@@ -113,7 +117,20 @@ export default {
   directives: { money: VMoney },
 
   methods: {
+    async saveEntrada() {
+      openDialog();
+      if (await confirm()) {
+        console.log('foi')
+      }
+    },
+    async saveDespesa() {
+      openDialog();
+    },
+    async saveSangria() {
+      openDialog();
+    },
     addToList(category) {
+      openDialog();
       console.log("tipo: ", this.tipoDespesa)
       console.log("refs: ", this.$refs.tipos.selectedItems[0])
       const capitalizedCategory =

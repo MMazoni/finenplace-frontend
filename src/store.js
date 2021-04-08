@@ -13,3 +13,13 @@ export const dialogConclude = () => {
 export const openDialog = () => {
     confirmation.dialog = true;
 };
+
+export const confirm = () => {
+    return new Promise(resolve => {
+        if (confirmation.confirm)
+            resolve(true);
+        else {
+            resolve(false);
+        }
+    });
+}
