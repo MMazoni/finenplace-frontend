@@ -94,12 +94,12 @@ export default {
     abrirCaixa() {
       console.log(this.valorInicial)
       abrirCaixa({
-        funcionario: 1, //TODO that
+        funcionario: 1, //TODO that when authentication works
         valorInicial: turnNumber(this.valorInicial),
         turno: this.selectedTurno
       })
         .then(response => {
-          this.caixa = response.data; //[TODO] make backend return caixaId
+          this.caixa = response.data;
           dialogConclude();
           this.$router.push({
             name: "Caixa Aberto",
