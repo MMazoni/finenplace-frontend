@@ -14,12 +14,12 @@ export const openDialog = () => {
     confirmation.dialog = true;
 };
 
-export const confirm = () => {
-    return new Promise(resolve => {
-        if (confirmation.confirm)
-            resolve(true);
-        else {
-            resolve(false);
-        }
-    });
-}
+// export const confirm = () => {
+//     return new Promise(resolve => {
+//         if (confirmation.confirm)
+//             resolve(true);
+//         else {
+//             resolve(false);
+//         }
+//     });
+// }

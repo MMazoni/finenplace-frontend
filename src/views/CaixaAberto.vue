@@ -4,7 +4,7 @@
     <v-container class="my-5 pt-5">
       <v-row>
         <v-col cols="11" md="3" class="mr-5 pr-5">
-          <v-form @submit.prevent="saveEntrada()">
+          <v-form @submit.prevent="saveEntrada('entrada')">
             <v-text-field v-model.lazy="entrada" v-money="money" ref="entrada" label="Entrada"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
@@ -17,7 +17,7 @@
         </v-col>
 
         <v-col cols="11" md="3" class="mr-5 pr-5">
-          <v-form @submit.prevent="saveDespesa()">
+          <v-form @submit.prevent="saveDespesa('despesa')">
             <v-select
               v-model="tipoDespesa"
               :items="tipoDespesas"
@@ -39,7 +39,7 @@
         </v-col>
 
         <v-col cols="12" md="3" class="mr-5 pr-5">
-          <v-form @submit.prevent="saveSangria()">
+          <v-form @submit.prevent="saveSangria('sangria')">
             <v-text-field v-model.lazy="sangria" v-money="money" ref="sangria" label="Sangria"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
@@ -68,7 +68,7 @@
 </template>
 <script>
 import Confirmation from "@/components/Confirmation";
-import { confirmation, dialogConclude, openDialog, confirm } from '../store.js';
+import { confirmation, dialogConclude, openDialog } from '../store.js';
 import { showCaixa, turnNumber } from "@/services/caixa";
 import { getTipoDespesas, storeDespesas } from "@/services/despesa";
 import { storeSangrias } from "@/services/sangria";
@@ -109,7 +109,7 @@ export default {
     dialogConfirmation(value) {
       if (value === true) {
         console.log(value)
-        //this.prepararFechamento();
+        this.prepararFechamento();
       }
     },
   },
@@ -117,20 +117,47 @@ export default {
   directives: { money: VMoney },
 
   methods: {
-    async saveEntrada() {
-      openDialog();
-      if (await confirm()) {
-        console.log('foi')
-      }
+    saveEntrada(category) {
+      const data = {
+        idCaixa: this.$route.params.caixaId,
+        entrada: turnNumber(this.entrada),
+      };
+      console.log(data)
+      storeEntradas(data)
+            .then((response) => {
+              console.log(response.data);
+              this.addToList(category);
+            })
+            .catch((error) => this.error.push(error.response));
     },
-    async saveDespesa() {
-      openDialog();
+    saveDespesa(category) {
+      const data = {
+        idCaixa: this.$route.params.caixaId,
+        idTipo: this.tipoDespesa,
+        despesa: turnNumber(this.despesa),
+      };
+      console.log(data)
+      storeDespesas(data)
+        .then((response) => {
+          console.log(response.data);
+          this.addToList(category);
+        })
+        .catch((error) => this.error.push(error.response));
     },
-    async saveSangria() {
-      openDialog();
+    saveSangria(category) {
+      const data = {
+        idCaixa: this.$route.params.caixaId,
+        sangria: turnNumber(this.sangria),
+      };
+      console.log(data)
+      storeSangrias(data)
+        .then((response) => {
+          console.log(response.data);
+          this.addToList(category);
+        })
+        .catch((error) => this.error.push(error.response));
     },
     addToList(category) {
-      openDialog();
       console.log("tipo: ", this.tipoDespesa)
       console.log("refs: ", this.$refs.tipos.selectedItems[0])
       const capitalizedCategory =
@@ -169,12 +196,6 @@ export default {
     fetchDespesaTipo() {
       getTipoDespesas()
         .then(response => {
-          // console.log("Response: ", response.data)
-          // response.data.reduce((accumulator, currentValue) => {
-          //   let { id, tipo } = currentValue;
-          //   this.tipoDespesas.push({id, tipo});
-          //   return;
-          // }, []);
           this.tipoDespesas = response.data;
           console.log("Despesa: ", this.tipoDespesas);
         })
@@ -186,39 +207,7 @@ export default {
         .catch((err) => this.error.push(err.response));
     },
     prepararFechamento() {
-      this.items.forEach((element) => {
-        if (element.categoria === "Entrada") {
-          storeEntradas({
-            idCaixa: this.$route.params.caixaId,
-            entrada: turnNumber(element.valor),
-          })
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((err) => this.error.push(err.response));
-        } else if ("tipo" in element) {
-          storeDespesas({
-            idCaixa: this.$route.params.caixaId,
-            idTipo: element.tipo,
-            despesa: turnNumber(element.valor),
-          })
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((err) => this.error.push(err.response));
-        } else if (element.categoria === "Sangria") {
-          storeSangrias({
-            idCaixa: this.$route.params.caixaId,
-            sangria: turnNumber(element.valor),
-          })
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((err) => this.error.push(err.response));
-        }
-      });
       dialogConclude();
-      // [TODO] tirar esse router push daqui. Mesmo dando erro, vai mudar a rota!!
       this.$router.push({
         name: "Fechamento",
         params: { caixaId: this.$route.params.caixaId },
