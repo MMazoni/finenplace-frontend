@@ -1,5 +1,5 @@
 <template>
-  <div class="caixa-aberto">
+  <div id="caixa-aberto">
     <v-subheader class="grey--text">Caixa Aberto</v-subheader>
     <v-container class="my-5 pt-5">
       <v-row>
@@ -69,7 +69,7 @@
 <script>
 import Confirmation from "@/components/Confirmation";
 import { confirmation, dialogConclude, openDialog } from '../store.js';
-import { showCaixa, turnNumber } from "@/services/caixa";
+import { showCaixa, turnNumber, money } from "@/services/caixa";
 import { getTipoDespesas, storeDespesas } from "@/services/despesa";
 import { storeSangrias } from "@/services/sangria";
 import { storeEntradas } from "@/services/entrada";
@@ -85,6 +85,9 @@ export default {
     dialog() {
       return confirmation.dialog;
     },
+    money() {
+      return money;
+    }
   },
   data: () => ({
     caixa: {},
@@ -95,13 +98,6 @@ export default {
     items: [],
     despesa: "",
     sangria: "",
-    money: {
-      decimal: ",",
-      thousands: ".",
-      prefix: "R$ ",
-      precision: 2,
-      masked: false,
-    },
     error: []
   }),
 
@@ -158,8 +154,6 @@ export default {
         .catch((error) => this.error.push(error.response));
     },
     addToList(category) {
-      console.log("tipo: ", this.tipoDespesa)
-      console.log("refs: ", this.$refs.tipos.selectedItems[0])
       const capitalizedCategory =
         category.charAt(0).toUpperCase() + category.slice(1);
       this.$set(this.items, this.id, {
