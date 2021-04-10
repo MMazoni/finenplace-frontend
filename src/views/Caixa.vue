@@ -51,7 +51,7 @@
 <script>
 import Confirmation from "@/components/Confirmation";
 import { confirmation, dialogConclude, openDialog } from '../store.js';
-import { abrirCaixa, turnNumber } from "@/services/caixa";
+import { abrirCaixa, turnNumber, money } from "@/services/caixa";
 import { VMoney } from "v-money";
 
 export default {
@@ -60,6 +60,9 @@ export default {
   computed: {
     dialogConfirmation() {
       return confirmation.confirm;
+    },
+    money() {
+      return money;
     }
   },
   data() {
@@ -67,15 +70,8 @@ export default {
       valorInicial: "",
       errors: [],
       alert: this.$route.params.alert,
-      money: {
-        decimal: ",",
-        thousands: ".",
-        prefix: "R$ ",
-        precision: 2,
-        masked: false,
-      },
       //user_id: localStorage.getItem("user"), //[TODO] authentication in backend is not built
-      turno: [ 'Manhã', 'Noite'],
+      turno: [ 'Matutino', 'Noturno'],
       selectedTurno: ""
     };
   },

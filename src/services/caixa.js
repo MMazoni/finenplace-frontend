@@ -25,20 +25,18 @@ export const abrirCaixa = data => {
 }
 
 export const fecharCaixa = (id, data) => {
-  return axios.patch(`caixa/${id}/`, {
-    vl_Dinheiro: data.dinheiro,
-    vl_CartaoCredito: data.credito,
-    vl_CartaoDebito: data.debito,
-    vl_Refeicao: data.refeicao,
-    vl_Online: data.online,
-    vl_Sangrias: data.sangrias,
-    vl_Despesas: data.despesas,
-    vl_Entradas: data.entradas,
-    vl_Faturamento: data.faturamento
+  return axios.post(`caixa/fechamento/`, {
+    abertura: { id },
+    totalDinheiro: data.dinheiro,
+    totalCredito: data.credito,
+    totalDebito: data.debito,
+    totalRefeicao: data.refeicao,
   });
 }
 
-export const turnNumber = (string) => {
+export const caixasFechados = () => axios.get('caixa/fechamento');
+
+export const turnNumber = string => {
   const withoutDollar = string.split(" ");
   return parseFloat(withoutDollar[1].replaceAll(".", "").replace(",", "."));
 }
