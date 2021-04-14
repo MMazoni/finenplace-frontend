@@ -49,22 +49,12 @@
 </template>
 
 <script>
-import Confirmation from "@/components/Confirmation";
-import { confirmation, dialogConclude, openDialog } from '../store.js';
 import { abrirCaixa, turnNumber, money } from "@/services/caixa";
 import { VMoney } from "v-money";
 
 export default {
   name: "Caixa",
-  components: { Confirmation },
-  computed: {
-    dialogConfirmation() {
-      return confirmation.confirm;
-    },
-    money() {
-      return money;
-    }
-  },
+
   data() {
     return {
       valorInicial: "",
@@ -76,11 +66,9 @@ export default {
     };
   },
 
-  watch: {
-    dialogConfirmation(value) {
-      if (value === true) {
-        this.abrirCaixa();
-      }
+  computed: {
+    money() {
+      return money;
     }
   },
 
@@ -96,17 +84,20 @@ export default {
       })
         .then(response => {
           this.caixa = response.data;
-          dialogConclude();
           this.$router.push({
             name: "Caixa Aberto",
             params: { caixaId: response.data.id }
           });
         })
-        .catch(error => this.errors.push(error.response))
-        .finally(() => { dialogConclude() });
+        .catch(error => this.errors.push(error.response));
     },
-    confirm() {
-      openDialog();
+    async confirm() {
+      const res = await this.$dialog.confirm({
+        text: 'Você tem certeza?',
+      });
+      if (res) {
+        this.abrirCaixa();
+      }
     }
   },
 };

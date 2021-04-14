@@ -25,18 +25,15 @@
         </v-col>
       </v-row>
     </v-container>
-    <Confirmation />
   </div>
 </template>
 <script>
-import Confirmation from "@/components/Confirmation";
-import { confirmation, dialogConclude, openDialog } from '../store.js';
 import { fecharCaixa, turnNumber, money } from "@/services/caixa";
 import { VMoney } from "v-money";
 
 export default {
   name: "Fechamento",
-  components: { Confirmation },
+
   data: () => ({
     caixa: {},
     dinheiro: "",
@@ -46,18 +43,7 @@ export default {
     errors: [],
   }),
 
-  watch: {
-    dialogConfirmation(value) {
-      if (value === true) {
-        this.fechamento();
-      }
-    },
-  },
-
   computed: {
-    dialogConfirmation() {
-      return confirmation.confirm;
-    },
     money() {
       return money;
     }
@@ -75,17 +61,20 @@ export default {
       })
         .then((response) => {
           console.log(response);
-          dialogConclude();
           this.$router.push({
             name: "Caixa",
             params: { alert: true },
           });
         })
-        .catch((error) => this.errors.push(error.response))
-        .finally(() => { dialogConclude() });
+        .catch((error) => this.errors.push(error.response));
     },
-    confirm() {
-      openDialog();
+    async confirm() {
+      const res = await this.$dialog.confirm({
+        text: 'Você gostaria de fechar o caixa?',
+      });
+      if (res) {
+        this.fechamento();
+      }
     },
   },
 };

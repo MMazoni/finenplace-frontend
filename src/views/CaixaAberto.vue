@@ -4,7 +4,7 @@
     <v-container class="my-5 pt-5">
       <v-row>
         <v-col cols="11" md="3" class="mr-5 pr-5">
-          <v-form @submit.prevent="saveEntrada('entrada')">
+          <v-form @submit.prevent="confirmSaveCategory('entrada')">
             <v-text-field v-model.lazy="entrada" v-money="money" ref="entrada" label="Entrada"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
@@ -17,7 +17,7 @@
         </v-col>
 
         <v-col cols="11" md="3" class="mr-5 pr-5">
-          <v-form @submit.prevent="saveDespesa('despesa')">
+          <v-form @submit.prevent="confirmSaveCategory('despesa')">
             <v-select
               v-model="tipoDespesa"
               :items="tipoDespesas"
@@ -39,7 +39,7 @@
         </v-col>
 
         <v-col cols="12" md="3" class="mr-5 pr-5">
-          <v-form @submit.prevent="saveSangria('sangria')">
+          <v-form @submit.prevent="confirmSaveCategory('sangria')">
             <v-text-field v-model.lazy="sangria" v-money="money" ref="sangria" label="Sangria"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
@@ -47,7 +47,7 @@
           </v-form>
         </v-col>
       </v-row>
-      <v-btn block color="secondary" class="mb-5" @click="confirm()">Preparar fechamento</v-btn>
+      <v-btn block color="secondary" class="mb-5" @click="confirmFechamento()">Preparar fechamento</v-btn>
       <v-row>
         <v-col cols="12">
           <v-list v-for="item in items" :key="items.indexOf(item)">
@@ -63,12 +63,9 @@
         </v-col>
       </v-row>
     </v-container>
-    <Confirmation />
   </div>
 </template>
 <script>
-import Confirmation from "@/components/Confirmation";
-import { confirmation, dialogConclude, openDialog } from '../store.js';
 import { showCaixa, turnNumber, money } from "@/services/caixa";
 import { getTipoDespesas, storeDespesas } from "@/services/despesa";
 import { storeSangrias } from "@/services/sangria";
@@ -77,18 +74,7 @@ import { VMoney } from "v-money";
 
 export default {
   name: "CaixaAberto",
-  components: { Confirmation },
-  computed: {
-    dialogConfirmation() {
-      return confirmation.confirm;
-    },
-    dialog() {
-      return confirmation.dialog;
-    },
-    money() {
-      return money;
-    }
-  },
+
   data: () => ({
     caixa: {},
     id: 0,
@@ -98,58 +84,61 @@ export default {
     items: [],
     despesa: "",
     sangria: "",
-    error: []
+    error: [],
+
   }),
 
-  watch: {
-    dialogConfirmation(value) {
-      if (value === true) {
-        console.log(value)
-        this.prepararFechamento();
-      }
+  computed: {
+    money() {
+      return money;
     },
   },
 
   directives: { money: VMoney },
 
   methods: {
-    saveEntrada(category) {
+    categorySaveMethods(category) {
+      const methods = {
+        entrada: this.saveEntrada,
+        despesa: this.saveDespesa,
+        sangria: this.saveSangria,
+      }
+      return methods[category]();
+    },
+    saveEntrada() {
       const data = {
         idCaixa: this.$route.params.caixaId,
         entrada: turnNumber(this.entrada),
       };
-      console.log(data)
       storeEntradas(data)
             .then((response) => {
               console.log(response.data);
-              this.addToList(category);
+              this.addToList('entrada');
             })
             .catch((error) => this.error.push(error.response));
     },
-    saveDespesa(category) {
+    saveDespesa() {
       const data = {
         idCaixa: this.$route.params.caixaId,
         idTipo: this.tipoDespesa,
         despesa: turnNumber(this.despesa),
       };
-      console.log(data)
       storeDespesas(data)
         .then((response) => {
           console.log(response.data);
-          this.addToList(category);
+          this.addToList('despesa');
         })
         .catch((error) => this.error.push(error.response));
     },
-    saveSangria(category) {
+    saveSangria() {
       const data = {
         idCaixa: this.$route.params.caixaId,
         sangria: turnNumber(this.sangria),
       };
-      console.log(data)
       storeSangrias(data)
         .then((response) => {
           console.log(response.data);
-          this.addToList(category);
+          this.addToList('sangria');
         })
         .catch((error) => this.error.push(error.response));
     },
@@ -191,7 +180,6 @@ export default {
       getTipoDespesas()
         .then(response => {
           this.tipoDespesas = response.data;
-          console.log("Despesa: ", this.tipoDespesas);
         })
         .catch((error) => this.error.push(error.response));
     },
@@ -201,14 +189,26 @@ export default {
         .catch((err) => this.error.push(err.response));
     },
     prepararFechamento() {
-      dialogConclude();
       this.$router.push({
         name: "Fechamento",
         params: { caixaId: this.$route.params.caixaId },
       });
     },
-    confirm() {
-      openDialog();
+    async confirmSaveCategory(category) {
+      const res = await this.$dialog.confirm({
+        text: `Você gostaria de salvar a ${category}?`,
+      });
+      if (res) {
+        this.categorySaveMethods(category);
+      }
+    },
+    async confirmFechamento() {
+      const res = await this.$dialog.confirm({
+        text: 'Você gostaria de preparar o fechamento do caixa?',
+      });
+      if (res) {
+        this.prepararFechamento();
+      }
     },
   },
 
