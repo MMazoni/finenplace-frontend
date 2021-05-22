@@ -47,7 +47,10 @@ export default {
       links: [
         {icon: 'dashboard', text: 'Dashboard', route: '/'},
         {icon: 'local_atm', text: 'Caixa', route: '/caixa'},
-        {icon: 'person', text: 'Equipe', route: '/equipe'}        
+        {icon: 'local_shipping', text: 'Fornecedor', route: '/fornecedor'},
+        {icon: 'receipt', text: 'Nota Fiscal', route: '#'},
+        {icon: 'inventory_2', text: 'Produto', route: '#'},
+        {icon: 'person', text: 'Equipe', route: '/equipe'},
       ]
     };
   },

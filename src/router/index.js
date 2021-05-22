@@ -47,6 +47,24 @@ const routes = [
         }
       },
       {
+        path: "/fornecedor",
+        name: "Fornecedor",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../views/Fornecedor.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: "/fornecedor/criar",
+        name: "Novo Fornecedor",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../views/FornecedorNovo.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: "/equipe",
         name: "Equipe",
         component: () =>
