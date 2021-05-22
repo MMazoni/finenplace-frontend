@@ -13,8 +13,7 @@ const routes = [
       {
         path: "/caixas",
         name: "ListaCaixas",
-        component: () =>
-          import(/* webpackChunkName: "about" */ "../views/ListaCaixas.vue"),
+        component: () => import("../views/ListaCaixas.vue"),
         meta: {
           requiresAuth: false
         }
@@ -22,8 +21,7 @@ const routes = [
       {
         path: "/caixa",
         name: "Caixa",
-        component: () =>
-          import(/* webpackChunkName: "about" */ "../views/Caixa.vue"),
+        component: () => import("../views/Caixa.vue"),
         meta: {
           requiresAuth: false
         }
@@ -31,8 +29,7 @@ const routes = [
       {
         path: "/caixa/:caixaId/aberto",
         name: "Caixa Aberto",
-        component: () =>
-          import(/* webpackChunkName: "about" */ "../views/CaixaAberto.vue"),
+        component: () => import("../views/CaixaAberto.vue"),
         meta: {
           requiresAuth: false
         }
@@ -40,8 +37,7 @@ const routes = [
       {
         path: "/caixa/:caixaId/fechamento",
         name: "Fechamento",
-        component: () =>
-          import(/* webpackChunkName: "about" */ "../views/Fechamento.vue"),
+        component: () => import("../views/CaixaFechamento.vue"),
         meta: {
           requiresAuth: false
         }
@@ -49,8 +45,7 @@ const routes = [
       {
         path: "/fornecedor",
         name: "Fornecedor",
-        component: () =>
-          import(/* webpackChunkName: "about" */ "../views/Fornecedor.vue"),
+        component: () => import("../views/Fornecedor.vue"),
         meta: {
           requiresAuth: false
         }
@@ -58,8 +53,23 @@ const routes = [
       {
         path: "/fornecedor/criar",
         name: "Novo Fornecedor",
-        component: () =>
-          import(/* webpackChunkName: "about" */ "../views/FornecedorNovo.vue"),
+        component: () => import("../views/FornecedorNovo.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: "/nota-fiscal",
+        name: "Nota Fiscal",
+        component: () => import("../views/NotaFiscal.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: "/nota-fiscal/criar",
+        name: "Nova Nota Fiscal",
+        component: () => import("../views/NotaFiscalNovo.vue"),
         meta: {
           requiresAuth: false
         }
@@ -67,8 +77,7 @@ const routes = [
       {
         path: "/equipe",
         name: "Equipe",
-        component: () =>
-          import(/* webpackChunkName: "about" */ "../views/Equipe.vue"),
+        component: () => import("../views/Equipe.vue"),
         meta: {
           requiresAuth: false
         }
@@ -78,8 +87,7 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+    component: () => import("../views/Login.vue"),
     meta: {
       requiresAuth: false
     }

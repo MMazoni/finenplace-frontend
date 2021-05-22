@@ -48,7 +48,7 @@ export default {
         {icon: 'dashboard', text: 'Dashboard', route: '/'},
         {icon: 'local_atm', text: 'Caixa', route: '/caixa'},
         {icon: 'local_shipping', text: 'Fornecedor', route: '/fornecedor'},
-        {icon: 'receipt', text: 'Nota Fiscal', route: '#'},
+        {icon: 'receipt', text: 'Nota Fiscal', route: '/nota-fiscal'},
         {icon: 'inventory_2', text: 'Produto', route: '#'},
         {icon: 'person', text: 'Equipe', route: '/equipe'},
       ]

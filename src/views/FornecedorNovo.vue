@@ -1,14 +1,13 @@
 <template>
   <div id="novo-fornecedor">
-    <v-subheader class="grey--text">Novo Fornecedor</v-subheader>
+    <v-subheader class="grey--text">Fornecedor / Novo</v-subheader>
     <v-container class="my-5 pt-5">
+      <h1 class="grey--text subtitle-1">Criar Fornecedor</h1>
       <v-row dense align="center" justify="center">
         <v-col cols="6" lg="8">
           <v-form @submit.prevent="confirm">
 
             <v-text-field v-model.lazy="nome" label="Nome" required></v-text-field>
-
-<!--            <v-text-field v-model.lazy="telefone" label="Telefone" required></v-text-field>-->
 
             <v-text-field-simplemask
               v-model.lazy="telefone"
@@ -48,7 +47,6 @@ export default {
 
 
   data: () => ({
-    fornecedor: {},
     nome: "",
     telefone: "",
     errors: [],
