@@ -7,23 +7,23 @@
         <v-row dense>
           <v-col>
             <div class="caption grey--text">#</div>
-            <div class="body-2">{{ caixa.cd_Caixa }}</div>
+            <div class="body-2 secondary--text">{{ caixa.id }}</div>
           </v-col>
           <v-col>
-            <div class="caption grey--text">Entradas</div>
-            <div class="body-2">R$ {{ caixa.vl_Entradas }}</div>
+            <div class="caption grey--text">Funcionário</div>
+            <div class="body-2">{{ firstName(caixa.abertura.funcionario.nome) }}</div>
           </v-col>
           <v-col>
-            <div class="caption grey--text">Despesas</div>
-            <div class="body-2">R$ {{ caixa.vl_Despesas }}</div>
+            <div class="caption grey--text">Turno</div>
+            <div class="body-2">{{ caixa.abertura.turno }}</div>
           </v-col>
           <v-col>
-            <div class="caption grey--text">Sangrias</div>
-            <div class="body-2">R$ {{ caixa.vl_Sangrias }}</div>
+            <div class="caption grey--text">Valor Inicial</div>
+            <div class="body-2">R$ {{ caixa.abertura.valorInicial.toFixed(2) }}</div>
           </v-col>
           <v-col sm="2" md="4" lg="2s">
-            <div class="caption grey--text">Faturamento</div>
-            <div class="body-2">R$ {{ caixa.vl_Faturamento }}</div>
+            <div class="caption grey--text">Valor Crédito</div>
+            <div class="body-2">R$ {{ caixa.totalCredito.toFixed(2) }}</div>
           </v-col>
         </v-row>
       </v-card>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { getCaixas } from "@/services/caixa";
+import { caixasFechados } from "@/services/caixa";
 
 export default {
   name: "ListaCaixas",
@@ -40,14 +40,18 @@ export default {
     caixas: []
   }),
   methods: {
-    fetchCaixa() {
-      getCaixas()
+    fetchCaixas() {
+      caixasFechados()
         .then(res => this.caixas = res.data)
         .catch(err => this.errors.push(err.response));
+    },
+    firstName(name) {
+      const array = name.split(" ");
+      return array[0];
     }
   },
   mounted() {
-    this.fetchCaixa();
+    this.fetchCaixas();
   }
 };
 </script>

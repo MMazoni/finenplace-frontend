@@ -26,6 +26,11 @@
                         prepend-inner-icon="local_atm"
                         label="Insira o valor"
                       ></v-text-field>
+                      <v-select
+                        v-model="selectedTurno"
+                        :items="turno"
+                        label="Turno"
+                      ></v-select>
                       <v-btn text color="secondary" block type="submit">
                         <span>Abrir Caixa</span>
                         <v-icon small right>lock_open</v-icon>
@@ -34,7 +39,6 @@
                   </v-col>
                 </v-row>
               </v-container>
-              <Confirmation />
             </v-card-actions>
           </v-card>
         </v-col>
@@ -44,40 +48,26 @@
 </template>
 
 <script>
-import Confirmation from "@/components/Confirmation";
-import { confirmation, dialogConclude, openDialog } from '../store.js';
-import { storeCaixa, storeControleCaixa, turnNumber } from "@/services/caixa";
+import { abrirCaixa, turnNumber, money } from "@/services/caixa";
 import { VMoney } from "v-money";
 
 export default {
   name: "Caixa",
-  components: { Confirmation },
-  computed: {
-    dialogConfirmation() {
-      return confirmation.confirm;
-    }
-  },
+
   data() {
     return {
       valorInicial: "",
       errors: [],
       alert: this.$route.params.alert,
-      money: {
-        decimal: ",",
-        thousands: ".",
-        prefix: "R$ ",
-        precision: 2,
-        masked: false,
-      },
-      user_id: localStorage.getItem("user"),
+      //user_id: localStorage.getItem("user"), //[TODO] authentication in backend is not built
+      turno: [ 'Matutino', 'Noturno'],
+      selectedTurno: ""
     };
   },
 
-  watch: {
-    dialogConfirmation(value) {
-      if (value === true) {
-        this.abrirCaixa();
-      }
+  computed: {
+    money() {
+      return money;
     }
   },
 
@@ -86,28 +76,27 @@ export default {
   methods: {
     abrirCaixa() {
       console.log(this.valorInicial)
-      storeControleCaixa(this.user_id, "dia")
-        .then(res => {
-          this.controleCaixa = res.data.cd_ControleCaixa;
-          storeCaixa({
-            cd_ControleCaixa: res.data.cd_ControleCaixa,
-            vl_CaixaInicial: turnNumber(this.valorInicial)
-          })
-            .then(res => {
-              this.caixa = res.data;
-              dialogConclude();
-              this.$router.push({
-                name: "Caixa Aberto",
-                params: { caixaId: res.data.cd_Caixa }
-              });
-            })
-            .catch(err => this.errors.push(err.response))
+      abrirCaixa({
+        funcionario: 1, //TODO that when authentication works
+        valorInicial: turnNumber(this.valorInicial),
+        turno: this.selectedTurno
+      })
+        .then(response => {
+          this.caixa = response.data;
+          this.$router.push({
+            name: "Caixa Aberto",
+            params: { caixaId: response.data.id }
+          });
         })
-        .catch(err => this.errors.push(err.response))
-        .finally(() => { dialogConclude() });
+        .catch(error => this.errors.push(error.response));
     },
-    confirm() {
-      openDialog();
+    async confirm() {
+      const res = await this.$dialog.confirm({
+        text: 'Você tem certeza?',
+      });
+      if (res) {
+        this.abrirCaixa();
+      }
     }
   },
 };
