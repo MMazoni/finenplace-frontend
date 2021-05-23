@@ -96,7 +96,7 @@
 
 <script>
 import { VMoney } from "v-money";
-import {money, turnNumber} from "@/services/caixa";
+import { money, turnNumber } from "@/services/caixa";
 import moment from 'moment'
 
 export default {

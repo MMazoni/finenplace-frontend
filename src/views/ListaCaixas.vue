@@ -19,11 +19,11 @@
           </v-col>
           <v-col>
             <div class="caption grey--text">Valor Inicial</div>
-            <div class="body-2">R$ {{ caixa.abertura.valorInicial.toFixed(2) }}</div>
+            <div class="body-2">{{ toReal(caixa.abertura.valorInicial) }}</div>
           </v-col>
           <v-col sm="2" md="4" lg="2s">
             <div class="caption grey--text">Valor Crédito</div>
-            <div class="body-2">R$ {{ caixa.totalCredito.toFixed(2) }}</div>
+            <div class="body-2">{{ toReal(caixa.totalCredito) }}</div>
           </v-col>
         </v-row>
       </v-card>
@@ -33,6 +33,7 @@
 
 <script>
 import { caixasFechados } from "@/services/caixa";
+import { toReal } from "@/utils";
 
 export default {
   name: "ListaCaixas",
@@ -48,7 +49,8 @@ export default {
     firstName(name) {
       const array = name.split(" ");
       return array[0];
-    }
+    },
+    toReal,
   },
   mounted() {
     this.fetchCaixas();

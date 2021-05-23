@@ -29,7 +29,7 @@
           </v-col>
           <v-col>
             <div class="caption grey--text">Valor Total</div>
-            <div class="body-2">R$ {{ notaFiscal.valor_total.toFixed(2) }}</div>
+            <div class="body-2">{{ toReal(notaFiscal.valor_total) }}</div>
           </v-col>
           <v-col>
             <div class="caption grey--text">Fornecedor</div>
@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { toReal } from "@/utils";
+
 export default {
   name: "NotaFiscal",
   data: () => {
@@ -67,6 +69,10 @@ export default {
         },
       ]
     }
+  },
+
+  methods: {
+    toReal,
   }
 }
 </script>
