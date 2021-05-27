@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import {fornecedores} from "@/services/fornecedor";
+
 export default {
   name: "Fornecedor",
   data: () =>  {
@@ -43,8 +45,21 @@ export default {
         {id: 2, nome: 'Lençol', telefone: '(11) 4252-3234'},
         {id: 3, nome: 'Balela', telefone: '(13) 2112-2234'},
         {id: 4, nome: 'YUGD', telefone: '(11) 97322-2423'},
-      ]
+      ],
+      errors: []
     }
+  },
+
+  methods: {
+    fetchFornecedores() {
+      fornecedores()
+        .then(response => this.caixas = response.data)
+        .catch(error => this.errors.push(error.response));
+    }
+  },
+
+  mounted() {
+    this.fetchFornecedores();
   }
 }
 </script>

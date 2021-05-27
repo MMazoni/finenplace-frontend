@@ -42,9 +42,10 @@
 </template>
 
 <script>
+import { storeFornecedor } from "@/services/fornecedor";
+
 export default {
   name: "FornecedorNovo",
-
 
   data: () => ({
     nome: "",
@@ -63,8 +64,15 @@ export default {
     },
 
     criarFornecedor() {
-      console.log(this.nome);
-      console.log(this.telefone);
+      storeFornecedor({
+        nome: this.nome,
+        telefone: this.telefone
+      }).then(response => {
+        console.log(response)
+        this.$router.push({
+          name: "Fornecedor"
+        });
+      }).catch((error) => this.errors.push(error.response));
     }
   }
 }
