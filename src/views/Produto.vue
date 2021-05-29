@@ -43,6 +43,7 @@
 
 <script>
 import { toReal } from "@/utils";
+import { produtos } from "@/services/produto";
 
 export default {
   name: "Produto",
@@ -56,6 +57,14 @@ export default {
   },
   methods: {
     toReal,
+    fetchProduto() {
+      produtos()
+        .then(response => this.produtos = response.data)
+        .catch(error => this.errors.push(error.response));
+    }
+  },
+  mounted() {
+    this.fetchProduto();
   }
 }
 </script>

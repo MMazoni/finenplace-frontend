@@ -105,7 +105,14 @@ export default {
         marca_id: this.marca,
         produto_tipo_id: this.tipo
       };
-      console.log(produto)
+      storeProduto(produto)
+        .then(response => {
+          console.log(response)
+          this.$router.push({
+            name: "Produto"
+          });
+        })
+        .catch((error) => this.errors.push(error.response));
     },
   }
 }
