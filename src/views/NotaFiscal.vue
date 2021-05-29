@@ -43,6 +43,7 @@
 
 <script>
 import { toReal } from "@/utils";
+import { notasFiscais } from "@/services/nota-fiscal";
 
 export default {
   name: "NotaFiscal",
@@ -67,12 +68,23 @@ export default {
             nome: 'YUGD'
           }
         },
-      ]
+      ],
+      errors: []
     }
   },
 
   methods: {
     toReal,
+
+    fetchNotaFiscal() {
+      notasFiscais()
+        .then(response => this.notasFiscais = response.data)
+        .catch(error => this.errors.push(error.response))
+    }
+  },
+
+  mounted() {
+    this.fetchNotaFiscal();
   }
 }
 </script>

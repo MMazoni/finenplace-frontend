@@ -97,6 +97,8 @@
 <script>
 import { VMoney } from "v-money";
 import { money, turnNumber } from "@/services/caixa";
+import { fornecedores } from "@/services/fornecedor";
+import { storeNotaFiscal } from "@/services/nota-fiscal";
 import moment from 'moment'
 
 export default {
@@ -150,8 +152,25 @@ export default {
         valor_total: turnNumber(this.valor),
         fornecedor_id: this.fornecedor
       };
-      console.log(notaFiscal);
+      storeNotaFiscal(notaFiscal)
+        .then(response => {
+          console.log(response)
+          this.$router.push({
+            name: "NotaFiscal"
+          });
+        })
+        .catch((error) => this.errors.push(error.response))
+    },
+
+    fetchFornecedores() {
+      fornecedores()
+        .then(response => this.fornecedores = response.data)
+        .catch(error => this.errors.push(error.response));
     }
+  },
+
+  mounted() {
+    this.fetchFornecedores();
   }
 }
 </script>

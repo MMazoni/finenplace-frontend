@@ -53,7 +53,7 @@ export default {
   methods: {
     fetchFornecedores() {
       fornecedores()
-        .then(response => this.caixas = response.data)
+        .then(response => this.fornecedores = response.data)
         .catch(error => this.errors.push(error.response));
     }
   },
