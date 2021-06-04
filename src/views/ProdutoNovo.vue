@@ -51,6 +51,7 @@
 <script>
 import { money, turnNumber } from "@/services/caixa";
 import { VMoney } from "v-money";
+import { storeProduto } from "@/services/produto";
 
 export default {
   name: "ProdutoNovo",
