@@ -91,6 +91,38 @@ const routes = [
         }
       },
       {
+        path: "/marca",
+        name: "Marca",
+        component: () => import("../views/Marca.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: "/marca/criar",
+        name: "Nova Marca",
+        component: () => import("../views/MarcaNova.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: "/tipo-produto",
+        name: "Tipo Produto",
+        component: () => import("../views/TipoProduto.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: "/tipo-produto/criar",
+        name: "Novo Tipo Produto",
+        component: () => import("../views/TipoProdutoNovo.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: "/equipe",
         name: "Equipe",
         component: () => import("../views/Equipe.vue"),
