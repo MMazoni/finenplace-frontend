@@ -37,7 +37,7 @@ export default {
   methods: {
     async confirm() {
       const res = await this.$dialog.confirm({
-        text: 'Você gostaria de criar esse produto?',
+        text: 'Você gostaria de criar essa marca?',
       });
       if (res) {
         this.criarProduto();

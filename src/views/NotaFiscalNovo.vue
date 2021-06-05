@@ -99,7 +99,7 @@ import { VMoney } from "v-money";
 import { money, turnNumber } from "@/services/caixa";
 import { fornecedores } from "@/services/fornecedor";
 import { storeNotaFiscal } from "@/services/nota-fiscal";
-import moment from 'moment'
+import moment from 'moment';
 
 export default {
   name: "NotaFiscalNovo",
@@ -138,7 +138,7 @@ export default {
   methods: {
     async confirm() {
       const res = await this.$dialog.confirm({
-        text: 'Você gostaria de criar o fornecedor?',
+        text: 'Você gostaria de criar a nota fiscal?',
       });
       if (res) {
         this.criarNotaFiscal();
