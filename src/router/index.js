@@ -123,6 +123,22 @@ const routes = [
         }
       },
       {
+        path: "/funcionario",
+        name: "Funcionário",
+        component: () => import("../views/Funcionario.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: "/funcionario/criar",
+        name: "Novo Funcionário",
+        component: () => import("../views/FuncionarioNovo.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: "/equipe",
         name: "Equipe",
         component: () => import("../views/Equipe.vue"),
