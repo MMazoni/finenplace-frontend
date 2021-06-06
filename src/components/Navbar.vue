@@ -52,6 +52,7 @@ export default {
         {icon: 'inventory_2', text: 'Produto', route: '/produto'},
         {icon: 'local_offer', text: 'Marca', route: '/marca'},
         {icon: 'category', text: 'TipoProduto', route: '/tipo-produto'},
+        {icon: 'people', text: 'Funcionario', route: '/funcionario'},
         {icon: 'person', text: 'Equipe', route: '/equipe'},
       ]
     };

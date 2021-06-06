@@ -1,5 +1,5 @@
 <template>
-  <div id="produto">
+  <div id="tipo-produto">
     <v-subheader class="grey--text">Tipo Produto</v-subheader>
     <v-container class="my-5 pt-5">
       <h1 class="grey--text subtitle-1">Tipos de Produto</h1>

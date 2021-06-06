@@ -1,5 +1,5 @@
 <template>
-  <div id="novo-produto">
+  <div id="novo-tipo-produto">
     <v-subheader class="grey--text">Tipo Produto / Novo</v-subheader>
     <v-container class="my-5 pt-5">
       <h1 class="grey--text subtitle-1">Criar Tipo de Produto</h1>

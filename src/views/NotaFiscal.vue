@@ -1,5 +1,5 @@
 <template>
-  <div id="fornecedor">
+  <div id="nota-fiscal">
     <v-subheader class="grey--text">Nota Fiscal</v-subheader>
     <v-container class="my-5 pt-5">
       <h1 class="grey--text subtitle-1">Notas Fiscais</h1>
