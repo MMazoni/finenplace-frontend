@@ -6,13 +6,19 @@
       <v-row dense align="center" justify="center">
         <v-col cols="6" lg="8">
           <v-form @submit.prevent="confirm">
-
             <v-text-field
               v-model.lazy="nome"
-              label="Nome da Marca"
+              label="Nome"
               required
             ></v-text-field>
-
+            <v-select
+              v-model="cargo"
+              :items="cargos"
+              item-text="cargo"
+              item-value="id"
+              label="Cargo"
+              required
+            ></v-select>
             <v-row justify="end">
               <v-btn color="secondary" type="submit" right>Criar</v-btn>
             </v-row>
@@ -24,13 +30,15 @@
 </template>
 
 <script>
-import { storeUsuario } from "@/services/usuario";
+import { storeUsuario, cargos } from "@/services/usuario";
 
 export default {
-  name: "Novo Funcionário",
+  name: "NovoFuncionario",
 
   data: () => ({
     nome: "",
+    cargo: "",
+    cargos: [],
     errors: [],
   }),
 
@@ -46,17 +54,30 @@ export default {
 
     criarUsuario() {
       const usuario = {
-        usuario: this.nome,
+        nome: this.nome,
+        cargo: {
+          id: this.cargo
+        }
       };
       storeUsuario(usuario)
         .then(response => {
           console.log(response)
           this.$router.push({
-            name: "Funcionário"
+            name: "Funcionario"
           });
         })
         .catch((error) => this.errors.push(error.response));
     },
+
+    fetchCargo() {
+      cargos()
+        .then(response => this.cargos = response.data)
+        .catch(error => this.errors.push(error.response));
+    }
+  },
+
+  mounted() {
+    this.fetchCargo();
   }
 }
 </script>

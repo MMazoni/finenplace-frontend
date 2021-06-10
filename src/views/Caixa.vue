@@ -84,7 +84,7 @@ export default {
         .then(response => {
           this.caixa = response.data;
           this.$router.push({
-            name: "Caixa Aberto",
+            name: "CaixaAberto",
             params: { caixaId: response.data.id }
           });
         })

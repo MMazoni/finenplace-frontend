@@ -175,6 +175,7 @@ export default {
     removeItem(id) {
       this.items.splice(id, 1);
       this.id -= 1;
+
     },
     fetchDespesaTipo() {
       getTipoDespesas()

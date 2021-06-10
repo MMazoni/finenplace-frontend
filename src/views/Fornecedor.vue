@@ -40,12 +40,7 @@ export default {
   name: "Fornecedor",
   data: () =>  {
     return {
-      fornecedores: [
-        {id: 1, nome: 'Krisalda', telefone: '(11) 2131-2131'},
-        {id: 2, nome: 'Lençol', telefone: '(11) 4252-3234'},
-        {id: 3, nome: 'Balela', telefone: '(13) 2112-2234'},
-        {id: 4, nome: 'YUGD', telefone: '(11) 97322-2423'},
-      ],
+      fornecedores: [],
       errors: []
     }
   },

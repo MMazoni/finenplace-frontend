@@ -36,12 +36,7 @@ export default {
   name: "Marca",
   data: () =>  {
     return {
-      marcas: [
-        {id: 1, marca: 'ZeroTreze'},
-        {id: 2, marca: 'San Yu'},
-        {id: 3, marca: 'Seboi'},
-        {id: 4, marca: 'Pundin'},
-      ]
+      marcas: []
     }
   },
   methods: {

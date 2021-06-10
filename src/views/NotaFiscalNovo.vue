@@ -108,12 +108,7 @@ export default {
   data: () => ({
     valor: "",
     fornecedor: "",
-    fornecedores: [
-      {id: 1, nome: 'Krisalda', telefone: '(11) 2131-2131'},
-      {id: 2, nome: 'Lençol', telefone: '(11) 4252-3234'},
-      {id: 3, nome: 'Balela', telefone: '(13) 2112-2234'},
-      {id: 4, nome: 'YUGD', telefone: '(11) 97322-2423'},
-    ],
+    fornecedores: [],
     dataCompra: moment().format('YYYY-MM-DD'),
     dataVencimento: moment().format('YYYY-MM-DD'),
     menu1: false,
@@ -147,10 +142,13 @@ export default {
 
     criarNotaFiscal() {
       const notaFiscal = {
-        data_compra: this.dataCompra,
-        data_vencimento: this.dataVencimento,
-        valor_total: turnNumber(this.valor),
-        fornecedor_id: this.fornecedor
+        fornecedor: {
+          id: this.fornecedor
+        },
+        dataCompra: this.dataCompraFormatada,
+        dataVencimento: this.dataVencimentoFormatada,
+        valorTotal: turnNumber(this.valor),
+
       };
       storeNotaFiscal(notaFiscal)
         .then(response => {

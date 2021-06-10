@@ -33,7 +33,7 @@
           </v-col>
           <v-col>
             <div class="caption grey--text">Tipo do Produto</div>
-            <div class="body-5">{{ produto.produto_tipo.tipo }}</div>
+            <div class="body-5">{{ produto.tipoProduto.tipo }}</div>
           </v-col>
         </v-row>
       </v-card>
@@ -49,10 +49,7 @@ export default {
   name: "Produto",
   data: () =>  {
     return {
-      produtos: [
-        {id: 1, nome: 'Zulan Max Y', valor: 100, marca: {id: 3, marca: 'Seboi'}, produto_tipo: {id: 1, tipo: 'Carne Bovina'}},
-        {id: 2, nome: 'Biro Lero',  valor: 9, marca: {id: 6, marca: 'Yezod'}, produto_tipo: {id: 10, tipo: 'Detergente'}},
-      ]
+      produtos: []
     }
   },
   methods: {

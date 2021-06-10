@@ -52,6 +52,8 @@
 import { money, turnNumber } from "@/services/caixa";
 import { VMoney } from "v-money";
 import { storeProduto } from "@/services/produto";
+import { tipoProdutos } from "@/services/tipo-produto";
+import { marcas } from "@/services/marca";
 
 export default {
   name: "ProdutoNovo",
@@ -62,22 +64,8 @@ export default {
     valor: "",
     marca: "",
     tipo: "",
-    marcas: [
-      {id: 1, marca: 'ZeroTreze'},
-      {id: 2, marca: 'San Yu'},
-      {id: 3, marca: 'Seboi'},
-      {id: 4, marca: 'Pundin'},
-    ],
-    produtoTipos: [
-      {id: 1, tipo: 'Carne Bovina'},
-      {id: 2, tipo: 'Carne Avina'},
-      {id: 3, tipo: 'Peixe'},
-      {id: 4, tipo: 'Leite'},
-      {id: 5, tipo: 'Azeite'},
-      {id: 6, tipo: 'Sorvete'},
-      {id: 7, tipo: 'Arroz'},
-      {id: 8, tipo: 'Feijão'},
-    ],
+    marcas: [],
+    produtoTipos: [],
     errors: [],
   }),
 
@@ -103,8 +91,13 @@ export default {
       const produto = {
         nome: this.nome,
         valor: turnNumber(this.valor),
-        marca_id: this.marca,
-        produto_tipo_id: this.tipo
+        marca: {
+          id: this.marca,
+        },
+        tipoProduto: {
+          id: this.tipo,
+        },
+        fornecedores: []
       };
       storeProduto(produto)
         .then(response => {
@@ -115,6 +108,24 @@ export default {
         })
         .catch((error) => this.errors.push(error.response));
     },
+
+    fetchMarca() {
+      marcas()
+        .then(response => this.marcas = response.data)
+        .catch(error => this.errors.push(error.response));
+    },
+
+    fetchTipoProduto() {
+      tipoProdutos()
+        .then(response => this.produtoTipos = response.data)
+        .catch(error => this.errors.push(error.response));
+    }
+
+  },
+
+  mounted() {
+    this.fetchMarca();
+    this.fetchTipoProduto();
   }
 }
 </script>

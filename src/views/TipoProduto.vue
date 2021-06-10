@@ -33,19 +33,10 @@
 import { tipoProdutos } from "@/services/tipo-produto";
 
 export default {
-  name: "Tipo Produto",
+  name: "TipoProduto",
   data: () =>  {
     return {
-      tipos: [
-        {id: 1, tipo: 'Carne Bovina'},
-        {id: 2, tipo: 'Carne Avina'},
-        {id: 3, tipo: 'Peixe'},
-        {id: 4, tipo: 'Leite'},
-        {id: 5, tipo: 'Azeite'},
-        {id: 6, tipo: 'Sorvete'},
-        {id: 7, tipo: 'Arroz'},
-        {id: 8, tipo: 'Feijão'},
-      ],
+      tipos: [],
     }
   },
   methods: {

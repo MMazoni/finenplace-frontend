@@ -25,7 +25,7 @@
 import { storeTipoProduto } from "@/services/tipo-produto";
 
 export default {
-  name: "Tipo Produto Novo",
+  name: "TipoProdutoNovo",
 
 
   data: () => ({
@@ -51,7 +51,7 @@ export default {
         .then(response => {
           console.log(response)
           this.$router.push({
-            name: "Tipo Produto"
+            name: "TipoProduto"
           });
         })
         .catch((error) => this.errors.push(error.response));

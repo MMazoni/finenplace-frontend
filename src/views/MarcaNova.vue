@@ -27,7 +27,7 @@
 import { storeMarca } from "@/services/marca";
 
 export default {
-  name: "Marca Nova",
+  name: "MarcaNova",
 
   data: () => ({
     nome: "",
@@ -40,7 +40,7 @@ export default {
         text: 'Você gostaria de criar essa marca?',
       });
       if (res) {
-        this.criarProduto();
+        this.criarMarca();
       }
     },
 

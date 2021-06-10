@@ -28,7 +28,7 @@ const routes = [
       },
       {
         path: "/caixa/:caixaId/aberto",
-        name: "Caixa Aberto",
+        name: "CaixaAberto",
         component: () => import("../views/CaixaAberto.vue"),
         meta: {
           requiresAuth: false
@@ -52,7 +52,7 @@ const routes = [
       },
       {
         path: "/fornecedor/criar",
-        name: "Novo Fornecedor",
+        name: "FornecedorNovo",
         component: () => import("../views/FornecedorNovo.vue"),
         meta: {
           requiresAuth: false
@@ -60,7 +60,7 @@ const routes = [
       },
       {
         path: "/nota-fiscal",
-        name: "Nota Fiscal",
+        name: "NotaFiscal",
         component: () => import("../views/NotaFiscal.vue"),
         meta: {
           requiresAuth: false
@@ -68,7 +68,7 @@ const routes = [
       },
       {
         path: "/nota-fiscal/criar",
-        name: "Nova Nota Fiscal",
+        name: "NotaFiscalNovo",
         component: () => import("../views/NotaFiscalNovo.vue"),
         meta: {
           requiresAuth: false
@@ -84,7 +84,7 @@ const routes = [
       },
       {
         path: "/produto/criar",
-        name: "Novo Produto",
+        name: "ProdutoNovo",
         component: () => import("../views/ProdutoNovo.vue"),
         meta: {
           requiresAuth: false
@@ -100,7 +100,7 @@ const routes = [
       },
       {
         path: "/marca/criar",
-        name: "Nova Marca",
+        name: "MarcaNova",
         component: () => import("../views/MarcaNova.vue"),
         meta: {
           requiresAuth: false
@@ -108,7 +108,7 @@ const routes = [
       },
       {
         path: "/tipo-produto",
-        name: "Tipo Produto",
+        name: "TipoProduto",
         component: () => import("../views/TipoProduto.vue"),
         meta: {
           requiresAuth: false
@@ -116,7 +116,7 @@ const routes = [
       },
       {
         path: "/tipo-produto/criar",
-        name: "Novo Tipo Produto",
+        name: "TipoProdutoNovo",
         component: () => import("../views/TipoProdutoNovo.vue"),
         meta: {
           requiresAuth: false
@@ -124,7 +124,7 @@ const routes = [
       },
       {
         path: "/funcionario",
-        name: "Funcionário",
+        name: "Funcionario",
         component: () => import("../views/Funcionario.vue"),
         meta: {
           requiresAuth: false
@@ -132,7 +132,7 @@ const routes = [
       },
       {
         path: "/funcionario/criar",
-        name: "Novo Funcionário",
+        name: "FuncionarioNovo",
         component: () => import("../views/FuncionarioNovo.vue"),
         meta: {
           requiresAuth: false

@@ -23,6 +23,10 @@
             <div class="caption grey--text">Nome</div>
             <div class="body-5">{{ funcionario.nome }}</div>
           </v-col>
+          <v-col>
+            <div class="caption grey--text">Cargo</div>
+            <div class="body-5">{{ funcionario.cargo.cargo }}</div>
+          </v-col>
         </v-row>
       </v-card>
     </v-container>
@@ -36,12 +40,7 @@ export default {
   name: "Funcionário",
   data: () =>  {
     return {
-      funcionarios: [
-        {id: 1, nome: 'ZeroTreze'},
-        {id: 2, nome: 'San Yu'},
-        {id: 3, nome: 'Seboi'},
-        {id: 4, nome: 'Pundin'},
-      ]
+      funcionarios: []
     }
   },
   methods: {

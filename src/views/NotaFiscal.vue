@@ -21,15 +21,15 @@
           </v-col>
           <v-col>
             <div class="caption grey--text">Data de Compra</div>
-            <div class="body-2">{{ notaFiscal.data_compra }}</div>
+            <div class="body-2">{{ moment(notaFiscal.dataCompra).format('DD/MM/YYYY') }}</div>
           </v-col>
           <v-col>
             <div class="caption grey--text">Data de Vencimento</div>
-            <div class="body-2">{{ notaFiscal.data_vencimento }}</div>
+            <div class="body-2">{{ moment(notaFiscal.dataVencimento).format('DD/MM/YYYY') }}</div>
           </v-col>
           <v-col>
             <div class="caption grey--text">Valor Total</div>
-            <div class="body-2">{{ toReal(notaFiscal.valor_total) }}</div>
+            <div class="body-2">{{ toReal(notaFiscal.valorTotal) }}</div>
           </v-col>
           <v-col>
             <div class="caption grey--text">Fornecedor</div>
@@ -44,37 +44,20 @@
 <script>
 import { toReal } from "@/utils";
 import { notasFiscais } from "@/services/nota-fiscal";
+import moment from 'moment';
 
 export default {
   name: "NotaFiscal",
   data: () => {
     return {
-      notasFiscais: [
-        {
-          id: 1,
-          data_compra: '10/04/2020',
-          data_vencimento: '10/05/2020',
-          valor_total: 1000,
-          fornecedor: {
-            nome: 'Krisalda'
-          }
-        },
-        {
-          id: 2,
-          data_compra: '17/01/2021',
-          data_vencimento: '17/03/2021',
-          valor_total: 500,
-          fornecedor: {
-            nome: 'YUGD'
-          }
-        },
-      ],
+      notasFiscais: [],
       errors: []
     }
   },
 
   methods: {
     toReal,
+    moment,
 
     fetchNotaFiscal() {
       notasFiscais()

@@ -1,6 +1,6 @@
 import axios from "./config";
 
-export const storeNotaFiscal = ({ data_compra, data_vencimento, valor_total, fornecedor_id }) => 
-    axios.post("nota-fiscal/", { data_compra, data_vencimento, valor_total, fornecedor_id });
+export const storeNotaFiscal = ({ fornecedor, dataCompra, dataVencimento, valorTotal }) =>
+    axios.post("fornecedor/nota-fiscal/", { fornecedor, dataCompra, dataVencimento, valorTotal });
 
-export const notasFiscais = () => axios.get('nota-fiscal/');
+export const notasFiscais = () => axios.get('fornecedor/nota-fiscal/');
