@@ -47,7 +47,13 @@ export default {
       links: [
         {icon: 'dashboard', text: 'Dashboard', route: '/'},
         {icon: 'local_atm', text: 'Caixa', route: '/caixa'},
-        {icon: 'person', text: 'Equipe', route: '/equipe'}        
+        {icon: 'local_shipping', text: 'Fornecedor', route: '/fornecedor'},
+        {icon: 'receipt', text: 'Nota Fiscal', route: '/nota-fiscal'},
+        {icon: 'inventory_2', text: 'Produto', route: '/produto'},
+        {icon: 'local_offer', text: 'Marca', route: '/marca'},
+        {icon: 'category', text: 'TipoProduto', route: '/tipo-produto'},
+        {icon: 'people', text: 'Funcionario', route: '/funcionario'},
+        {icon: 'person', text: 'Equipe', route: '/equipe'},
       ]
     };
   },

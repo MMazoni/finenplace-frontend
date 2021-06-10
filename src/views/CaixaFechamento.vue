@@ -35,7 +35,6 @@ export default {
   name: "Fechamento",
 
   data: () => ({
-    caixa: {},
     dinheiro: "",
     credito: "",
     debito: "",
