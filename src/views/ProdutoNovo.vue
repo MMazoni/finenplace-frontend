@@ -38,6 +38,15 @@
               required
             ></v-select>
 
+            <v-select
+              v-model="fornecedor"
+              :items="fornecedores"
+              item-text="nome"
+              item-value="id"
+              label="Fornecedor"
+              required
+            ></v-select>
+
             <v-row justify="end">
               <v-btn color="secondary" type="submit" right>Criar Produto</v-btn>
             </v-row>
@@ -54,6 +63,7 @@ import { VMoney } from "v-money";
 import { storeProduto } from "@/services/produto";
 import { tipoProdutos } from "@/services/tipo-produto";
 import { marcas } from "@/services/marca";
+import {fornecedores} from "@/services/fornecedor";
 
 export default {
   name: "ProdutoNovo",
@@ -66,6 +76,8 @@ export default {
     tipo: "",
     marcas: [],
     produtoTipos: [],
+    fornecedor: "",
+    fornecedores: [],
     errors: [],
   }),
 
@@ -97,7 +109,9 @@ export default {
         tipoProduto: {
           id: this.tipo,
         },
-        fornecedores: []
+        fornecedor: {
+          id: this.fornecedor
+        }
       };
       storeProduto(produto)
         .then(response => {
@@ -119,13 +133,19 @@ export default {
       tipoProdutos()
         .then(response => this.produtoTipos = response.data)
         .catch(error => this.errors.push(error.response));
-    }
+    },
 
+    fetchFornecedores() {
+      fornecedores()
+        .then(response => this.fornecedores = response.data)
+        .catch(error => this.errors.push(error.response));
+    },
   },
 
   mounted() {
     this.fetchMarca();
     this.fetchTipoProduto();
+    this.fetchFornecedores();
   }
 }
 </script>

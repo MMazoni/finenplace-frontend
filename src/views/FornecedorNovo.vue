@@ -72,7 +72,7 @@ export default {
         this.$router.push({
           name: "Fornecedor"
         });
-      }).catch((error) => this.errors.push(error.response));
+      }).catch(error => this.errors.push(error.response));
     }
   }
 }
