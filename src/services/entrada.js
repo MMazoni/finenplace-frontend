@@ -11,3 +11,7 @@ export const storeEntradas = data => axios.post("caixa/entrada/", {
     },
     valor: data.entrada
 });
+
+export const entradasPorCaixa = caixaId => axios.get(`caixa/entrada/lista/${caixaId}`);
+
+export const deleteEntrada = entradaId => axios.delete(`caixa/entrada/${entradaId}`);

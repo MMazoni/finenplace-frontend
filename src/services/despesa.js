@@ -21,3 +21,7 @@ export const storeTipoDespesas = data => axios.post("despesa/tipo/", {
     tipo: data.tipoDespesa,
     descricao: data.descricao
 });
+
+export const despesasPorCaixa = caixaId => axios.get(`caixa/despesa/lista/${caixaId}`);
+
+export const deleteDespesa = despesaId => axios.delete(`caixa/despesa/${despesaId}`);
