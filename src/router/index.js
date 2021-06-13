@@ -43,6 +43,22 @@ const routes = [
         }
       },
       {
+        path: "/tipo-despesa",
+        name: "TipoDespesa",
+        component: () => import("../views/TipoDespesa.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: "/tipo-despesa/criar",
+        name: "TipoDespesaNovo",
+        component: () => import("../views/TipoDespesaNovo.vue"),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: "/fornecedor",
         name: "Fornecedor",
         component: () => import("../views/Fornecedor.vue"),
