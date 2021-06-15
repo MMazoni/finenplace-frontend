@@ -9,7 +9,7 @@
         <span>Place</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text color="grey">
+      <v-btn @click="logout" text color="grey">
         <span>Sair</span>
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { logout } from "@/services/auth";
+
 export default {
   name: "Navbar",
   data() {
@@ -58,5 +60,8 @@ export default {
       ]
     };
   },
+  methods: {
+    logout,
+  }
 };
 </script>

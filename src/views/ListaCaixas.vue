@@ -112,8 +112,8 @@
             <div class="body-2">{{ toReal(caixa.abertura.valorInicial) }}</div>
           </v-col>
           <v-col sm="2" md="4" lg="2s">
-            <div class="caption grey--text">Valor Crédito</div>
-            <div class="body-2">{{ toReal(caixa.totalCredito) }}</div>
+            <div class="caption grey--text">Faturamento</div>
+            <div class="body-2">{{ toReal(caixa.valorFinal) }}</div>
           </v-col>
         </v-row>
       </v-card>

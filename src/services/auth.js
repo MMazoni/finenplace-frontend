@@ -1,16 +1,19 @@
-import axios from "./config";
 import router from '../router';
+import axios from "axios";
 
-export const login = data => {
-    return axios.post('user/login', {
-        username: data.email,
-        password: data.password
-    });
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.xsrfCookieName = "csrftoken";
+
+const Axios = axios.create({
+  baseURL: "http://localhost:8000/api/"
+});
+
+export const login = ({ username, password }) => {
+    return Axios.post('auth/login', { username, password });
 }
 
-export function logout(data) {
-    localStorage.setItem(data, null);
-    //    localStorage.setItem('role_id',null);
-    localStorage.setItem('id', null)
+export const logout = () => {
+    localStorage.setItem('key', null);
+    localStorage.setItem('user', null)
     router.push('login');
 }

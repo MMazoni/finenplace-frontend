@@ -3,16 +3,16 @@
     <v-subheader class="grey--text">Tipo Despesa</v-subheader>
     <v-container class="my-5 pt-5">
       <h1 class="grey--text subtitle-1">Tipos de Despesas</h1>
-      <v-col class="text-right">
-        <v-btn
-          elevation="2"
-          color="primary"
-          fab
-          relative
-          right
-          to="/tipo-despesa/criar"
-        ><v-icon>mdi-plus</v-icon></v-btn>
-      </v-col>
+<!--      <v-col class="text-right">-->
+<!--        <v-btn-->
+<!--          elevation="2"-->
+<!--          color="primary"-->
+<!--          fab-->
+<!--          relative-->
+<!--          right-->
+<!--          to="/tipo-despesa/criar"-->
+<!--        ><v-icon>mdi-plus</v-icon></v-btn>-->
+<!--      </v-col>-->
       <v-card class="px-3 py-1 mt-2" v-for="tipo in tipos" :key="tipo.id">
         <v-row dense>
           <v-col>

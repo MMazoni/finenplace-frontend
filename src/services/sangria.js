@@ -4,7 +4,7 @@ export const getSangriasByCaixa = caixaId => axios.get(`caixa/sangria/${caixaId}
 
 export const storeSangrias = data => axios.post("caixa/sangria/", {
     funcionario: {
-        id: 1 //[TODO] remove this from here in backend
+        id: data.user
     },
     caixa: {
         id: data.idCaixa

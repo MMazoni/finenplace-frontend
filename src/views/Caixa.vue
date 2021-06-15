@@ -59,7 +59,6 @@ export default {
       valorInicial: "",
       errors: [],
       alert: this.$route.params.alert,
-      //user_id: localStorage.getItem("user"), //[TODO] authentication in backend is not built
       turno: [ 'Matutino', 'Noturno'],
       selectedTurno: ""
     };
@@ -77,7 +76,7 @@ export default {
     abrirCaixa() {
       console.log(this.valorInicial)
       abrirCaixa({
-        funcionario: 1, //TODO that when authentication works
+        funcionario: localStorage.getItem("user"),
         valorInicial: turnNumber(this.valorInicial),
         turno: this.selectedTurno
       })

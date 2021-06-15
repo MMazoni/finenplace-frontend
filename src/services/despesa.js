@@ -9,7 +9,7 @@ export const storeDespesas = data =>  {
         id: data.idCaixa,
     },
     tipo: {
-      id: data.idTipo,
+      id: 37,
     },
     valor: data.despesa
   });

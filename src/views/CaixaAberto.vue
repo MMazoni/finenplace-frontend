@@ -18,15 +18,15 @@
 
         <v-col cols="11" md="3" class="mr-5 pr-5">
           <v-form @submit.prevent="confirmSaveCategory('despesa')">
-            <v-select
-              v-model="tipoDespesa"
-              :items="tipoDespesas"
-              ref="tipos"
-              item-text="tipo"
-              item-value="id"
-              label="Tipo"
-              required
-            ></v-select>
+<!--            <v-select-->
+<!--              v-model="tipoDespesa"-->
+<!--              :items="tipoDespesas"-->
+<!--              ref="tipos"-->
+<!--              item-text="descricao"-->
+<!--              item-value="id"-->
+<!--              label="Tipo"-->
+<!--              required-->
+<!--            ></v-select>-->
             <v-text-field v-model.lazy="despesa" v-money="money" ref="despesa" label="Despesa"></v-text-field>
             <v-btn text icon color="secondary" type="submit">
               <v-icon>add</v-icon>
@@ -67,7 +67,7 @@
 </template>
 <script>
 import { showCaixa, turnNumber, money } from "@/services/caixa";
-import { deleteDespesa, despesasPorCaixa, getTipoDespesas, storeDespesas } from "@/services/despesa";
+import { deleteDespesa, despesasPorCaixa, storeDespesas } from "@/services/despesa";
 import { deleteSangria, sangriasPorCaixa, storeSangrias } from "@/services/sangria";
 import { deleteEntrada, entradasPorCaixa, storeEntradas } from "@/services/entrada";
 import { VMoney } from "v-money";
@@ -79,8 +79,8 @@ export default {
     caixa: {},
     id: 0,
     entrada: "",
-    tipoDespesas: [],
-    tipoDespesa: 0,
+    // tipoDespesas: [],
+    // tipoDespesa: 0,
     items: [],
     despesa: "",
     sangria: "",
@@ -120,7 +120,7 @@ export default {
     saveDespesa() {
       const data = {
         idCaixa: this.$route.params.caixaId,
-        idTipo: this.tipoDespesa,
+        // idTipo: this.tipoDespesa,
         despesa: turnNumber(this.despesa),
       };
       storeDespesas(data)
@@ -134,6 +134,7 @@ export default {
       const data = {
         idCaixa: this.$route.params.caixaId,
         sangria: turnNumber(this.sangria),
+        user: localStorage.getItem('user')
       };
       storeSangrias(data)
         .then(response => {
@@ -142,7 +143,7 @@ export default {
         })
         .catch(error => this.error.push(error.response));
     },
-    addToList(categoryId, category, tipoNome = null) {
+    addToList(categoryId, category) {
       const capitalizedCategory =
         category.charAt(0).toUpperCase() + category.slice(1);
       this.$set(this.items, this.id, {
@@ -151,13 +152,13 @@ export default {
         valor: this[category],
         categoriaId: categoryId,
       });
-      if (category === "despesa" && tipoNome) {
-        this.items[this.id].categoria = tipoNome;
-        this.items[this.id]["tipo"] = this.tipoDespesa;
-      } else if (category === "despesa" && !tipoNome) {
-        this.items[this.id].categoria = `${this.$refs.tipos.selectedItems[0].tipo}(despesa)`;
-        this.items[this.id]["tipo"] = this.$refs.tipos.selectedItems[0].id;
-      }
+      // if (category === "despesa" && tipoNome) {
+      //   this.items[this.id].categoria = tipoNome;
+      //   this.items[this.id]["tipo"] = this.tipoDespesa;
+      // } else if (category === "despesa" && !tipoNome) {
+      //   this.items[this.id].categoria = `${this.$refs.tipos.selectedItems[0].tipo}(despesa)`;
+      //   this.items[this.id]["tipo"] = this.$refs.tipos.selectedItems[0].id;
+      // }
       this.id += 1;
       this.cleanFields();
     },
@@ -168,7 +169,7 @@ export default {
         sangria: this.$refs.sangria.$el.querySelector('input')
       }
       inputs.entrada.value = "R$ 0.00";
-      this.tipoDespesa = 0;
+      // this.tipoDespesa = 0;
       inputs.despesa.value = "R$ 0.00";
       inputs.sangria.value = "R$ 0.00";
     },
@@ -179,13 +180,13 @@ export default {
         this.id -= 1;
       }
     },
-    fetchDespesaTipo() {
-      getTipoDespesas()
-        .then(response => {
-          this.tipoDespesas = response.data;
-        })
-        .catch((error) => this.error.push(error));
-    },
+    // fetchDespesaTipo() {
+    //   getTipoDespesas()
+    //     .then(response => {
+    //       this.tipoDespesas = response.data;
+    //     })
+    //     .catch((error) => this.error.push(error));
+    // },
     fetchCaixa() {
       showCaixa(this.$route.params.caixaId)
         .then(response => this.caixa = response.data)
@@ -219,9 +220,7 @@ export default {
           if (response.data) {
             response.data.reduce((accumulator, current) => {
               this.despesa = this.numberToReal(current.valor);
-              this.tipoDespesa = current.tipo.id;
-              const tipoNome = `${current.tipo.tipo}(despesa)`;
-              this.addToList(current.id, 'despesa', tipoNome);
+              this.addToList(current.id, 'despesa');
             }, []);
           }
         })
@@ -291,7 +290,7 @@ export default {
 
   mounted() {
     this.fetchCaixa();
-    this.fetchDespesaTipo();
+    // this.fetchDespesaTipo();
     this.fetchDespesasByCaixa();
     this.fetchSangriasByCaixa();
     this.fetchEntradasByCaixa();

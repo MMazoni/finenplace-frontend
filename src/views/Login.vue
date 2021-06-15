@@ -20,10 +20,9 @@
                   @submit.prevent="logar()"
                 >
                   <v-text-field
-                    v-model="email"
-                    label="Email"
-                    name="email"
-                    :rules="emailRegras"
+                    v-model="username"
+                    label="Usuário"
+                    name="username"
                     prepend-icon="mdi-account"
                     required
                   ></v-text-field>
@@ -61,17 +60,16 @@
 
 <script>
 import { login } from "@/services/auth";
-//import { axios as Usuario } from "@/services/config";
 
 export default {
   name: "Login",
   data: () => ({
     valid: true,
-    email: "",
-    emailRegras: [
-      (v) => !!v || "Email é obrigatório",
-      //v => /.+@.+\..+/.test(v) || "É necessário um email válido"
-    ],
+    username: "",
+    // emailRegras: [
+    //   (v) => !!v || "Email é obrigatório",
+    //   //v => /.+@.+\..+/.test(v) || "É necessário um email válido"
+    // ],
     password: "",
     passwordRegras: [(v) => !!v || "Senha é obrigatória"],
     error: "",
@@ -82,24 +80,14 @@ export default {
     },
     logar() {
       this.validar();
-      if (this.email === 'admin@admin.com' && this.password === '1234') {
-        const response = {
-            "token": "fake-token",
-            "user_id": 0,
-            "cargo": "Funcionario"
-
-        };
-        localStorage.setItem('key', response.token);
-        this.$router.push({ name: 'Dashboard' });
-        return;
-      }
       login({
-        email: this.email,
+        username: this.username,
         password: this.password,
       })
         .then((response) => {
-          localStorage.setItem('key', response.data.token);
-          localStorage.setItem('user', response.data.user_id);
+          const token = response.data.accessToken;
+          localStorage.setItem('key', token);
+          localStorage.setItem('user', response.data.id);
           this.$router.push({ name: 'Dashboard' });
         })
         .catch((erro) => (this.error = erro.response.data.message));
