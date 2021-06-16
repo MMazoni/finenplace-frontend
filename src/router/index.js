@@ -155,6 +155,14 @@ const routes = [
         }
       },
       {
+        path: "/dre",
+        name: "Dre",
+        component: () => import("../views/Dre.vue"),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
         path: "/equipe",
         name: "Equipe",
         component: () => import("../views/Equipe.vue"),

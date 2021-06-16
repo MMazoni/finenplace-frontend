@@ -152,13 +152,6 @@ export default {
         valor: this[category],
         categoriaId: categoryId,
       });
-      // if (category === "despesa" && tipoNome) {
-      //   this.items[this.id].categoria = tipoNome;
-      //   this.items[this.id]["tipo"] = this.tipoDespesa;
-      // } else if (category === "despesa" && !tipoNome) {
-      //   this.items[this.id].categoria = `${this.$refs.tipos.selectedItems[0].tipo}(despesa)`;
-      //   this.items[this.id]["tipo"] = this.$refs.tipos.selectedItems[0].id;
-      // }
       this.id += 1;
       this.cleanFields();
     },
@@ -169,7 +162,6 @@ export default {
         sangria: this.$refs.sangria.$el.querySelector('input')
       }
       inputs.entrada.value = "R$ 0.00";
-      // this.tipoDespesa = 0;
       inputs.despesa.value = "R$ 0.00";
       inputs.sangria.value = "R$ 0.00";
     },
@@ -180,13 +172,7 @@ export default {
         this.id -= 1;
       }
     },
-    // fetchDespesaTipo() {
-    //   getTipoDespesas()
-    //     .then(response => {
-    //       this.tipoDespesas = response.data;
-    //     })
-    //     .catch((error) => this.error.push(error));
-    // },
+
     fetchCaixa() {
       showCaixa(this.$route.params.caixaId)
         .then(response => this.caixa = response.data)

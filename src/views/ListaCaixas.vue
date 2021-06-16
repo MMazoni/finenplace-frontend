@@ -16,64 +16,11 @@
             <v-card-text>
               <v-container>
                 <v-form>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-menu
-                        ref="menu1"
-                        v-model="menu1"
-                        :close-on-content-click="false"
-                        transition="scale-transition"
-                        offset-y
-                        max-width="290px"
-                        min-width="auto"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="dataInicioFormatada"
-                            label="Data Início"
-                            readonly
-                            prepend-icon="mdi-calendar"
-                            v-bind="attrs"
-                            v-on="on"
-                            @click:clear="dataInicio = null"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="dataInicio"
-                          @input="menu1 = false"
-                        ></v-date-picker>
-                      </v-menu>
-                    </v-col>
-                    <v-spacer></v-spacer>
-
-                    <v-col cols="12">
-                      <v-menu
-                        ref="menu2"
-                        v-model="menu2"
-                        :close-on-content-click="false"
-                        transition="scale-transition"
-                        offset-y
-                        max-width="290px"
-                        min-width="auto"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="dataFimFormatada"
-                            label="Data Final"
-                            readonly
-                            prepend-icon="mdi-calendar"
-                            v-bind="attrs"
-                            v-on="on"
-                            @click:clear="dataFim = null"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="dataFim"
-                          @input="menu2 = false"
-                        ></v-date-picker>
-                      </v-menu>
-                    </v-col>
-                    <v-spacer></v-spacer>
+                  <v-row justify="center">
+                    <v-date-picker
+                      v-model="picker"
+                      type="month"
+                    ></v-date-picker>
                   </v-row>
                 </v-form>
               </v-container>
@@ -133,18 +80,14 @@ export default {
     caixas: [],
     dialog: false,
     dataInicio: moment().format('YYYY-MM-DD'),
-    dataFim: moment().format('YYYY-MM-DD'),
+    picker: new Date().toISOString().substr(0, 10),
     menu1: false,
-    menu2: false,
     errors: [],
   }),
 
   computed: {
     dataInicioFormatada () {
-      return this.dataInicio ? moment(this.dataInicio).format('DD/MM/YYYY') : ''
-    },
-    dataFimFormatada () {
-      return this.dataFim ? moment(this.dataFim).format('DD/MM/YYYY') : ''
+      return this.picker ? moment(`${this.picker}-01`).format('DD/MM/YYYY') : ''
     },
   },
 
@@ -160,12 +103,12 @@ export default {
     },
 
     fetchDRE() {
-      const datas = {
-        data_inicio: this.dataInicio,
-        data_fim: this.dataFim,
-      };
-      dre(datas)
-        .then(response => this.dre = response.data)
+      dre({
+        inicio: this.dataInicioFormatada,
+      })
+        .then(() => {
+          this.$router.push('Dre');
+        })
         .catch(error => this.errors.push(error.response));
     },
 
