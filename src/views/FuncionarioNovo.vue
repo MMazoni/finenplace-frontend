@@ -19,6 +19,26 @@
               label="Cargo"
               required
             ></v-select>
+            <v-text-field
+              v-model.lazy="email"
+              label="Email"
+              type="email"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model.lazy="username"
+              label="Usuário"
+              name="username"
+              required
+            ></v-text-field>
+
+            <v-text-field         
+              id="password"
+              v-model.lazy="password"
+              label="Senha"
+              name="password"
+              type="password"
+            ></v-text-field>
             <v-row justify="end">
               <v-btn color="secondary" type="submit" right>Criar</v-btn>
             </v-row>
@@ -38,6 +58,9 @@ export default {
   data: () => ({
     nome: "",
     cargo: "",
+    email: "",
+    username: "",
+    password: "",
     cargos: [],
     errors: [],
   }),
@@ -57,7 +80,10 @@ export default {
         nome: this.nome,
         cargo: {
           id: this.cargo
-        }
+        },
+        email: this.email,
+        username: this.username,
+        password: this.password,
       };
       storeUsuario(usuario)
         .then(response => {
