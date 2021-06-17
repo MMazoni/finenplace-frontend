@@ -51,10 +51,10 @@ export default {
         {icon: 'local_atm', text: 'Caixa', route: '/caixa'},
         {icon: 'money_off', text: 'Tipo de Despesa', route: '/tipo-despesa'},
         {icon: 'local_shipping', text: 'Fornecedor', route: '/fornecedor'},
-        {icon: 'receipt', text: 'Nota Fiscal', route: '/nota-fiscal'},
-        {icon: 'inventory_2', text: 'Produto', route: '/produto'},
         {icon: 'local_offer', text: 'Marca', route: '/marca'},
         {icon: 'category', text: 'Tipo de Produto', route: '/tipo-produto'},
+        {icon: 'inventory_2', text: 'Produto', route: '/produto'},
+        {icon: 'receipt', text: 'Nota Fiscal', route: '/nota-fiscal'},
         {icon: 'people', text: 'Funcionário', route: '/funcionario'},
         {icon: 'person', text: 'Equipe', route: '/equipe'},
       ]

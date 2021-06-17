@@ -1,5 +1,13 @@
 <template>
   <div id="dre">
+    <v-snackbar
+      v-model="alert"
+      top
+      color="success"
+      timeout="3000"
+    >
+      DRE gerado com sucesso.
+    </v-snackbar>
     <v-subheader class="grey--text">DRE</v-subheader>
     <v-container class="my-5 pt-5 fill-height" fluid>
       <h1 class="primary--text subtitle-1 justify-center">{{ dre.inicio }} - {{ moment(dre.fim).format('DD/MM/YYYY') }}</h1>
@@ -322,6 +330,13 @@ export default {
       dre: []
     }
   },
+
+  computed: {
+    alert() {
+      return this.$route.params.alert;
+    }
+  },
+
   methods: {
     toReal,
     moment,

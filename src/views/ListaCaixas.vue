@@ -118,7 +118,10 @@ export default {
         inicio: this.dataInicioFormatada,
       })
         .then(() => {
-          this.$router.push('Dre');
+          this.$router.push({
+            name: 'Dre',
+            params: { alert: true }
+          });
         })
         .catch(error => this.errors.push(error.response));
     },

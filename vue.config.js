@@ -12,5 +12,6 @@ module.exports = {
   },
   "transpileDependencies": [
     "vuetify"
-  ]
+  ],
+  filename: '[name].[hash].bundle.js',
 }
