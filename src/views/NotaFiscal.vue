@@ -1,5 +1,13 @@
 <template>
   <div id="nota-fiscal">
+    <v-snackbar
+      v-model="alert"
+      top
+      color="success"
+      timeout="3000"
+    >
+      Nota fiscal criada com sucesso.
+    </v-snackbar>
     <v-subheader class="grey--text">Nota Fiscal</v-subheader>
     <v-container class="my-5 pt-5">
       <h1 class="grey--text subtitle-1">Notas Fiscais</h1>
@@ -11,7 +19,9 @@
           relative
           right
           to="/nota-fiscal/criar"
-        ><v-icon>mdi-plus</v-icon></v-btn>
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </v-col>
       <v-card class="px-3 py-1 mt-2" v-for="notaFiscal in notasFiscais" :key="notaFiscal.id">
         <v-row dense>
@@ -42,8 +52,8 @@
 </template>
 
 <script>
-import { toReal } from "@/utils";
-import { notasFiscais } from "@/services/nota-fiscal";
+import {toReal} from "@/utils";
+import {notasFiscais} from "@/services/nota-fiscal";
 import moment from 'moment';
 
 export default {
@@ -52,6 +62,12 @@ export default {
     return {
       notasFiscais: [],
       errors: []
+    }
+  },
+
+  computed: {
+    alert () {
+      return this.$route.params.alert;
     }
   },
 

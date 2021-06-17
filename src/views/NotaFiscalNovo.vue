@@ -185,19 +185,20 @@ export default {
     },
 
     criarNotaFiscal() {
-      const notaFiscal = {
+      this.notaFiscal = {
         fornecedor: {
           id: this.fornecedor
         },
         dataCompra: this.dataCompraFormatada,
         dataVencimento: this.dataVencimentoFormatada,
-        produtosNotaFiscal: this.produtosNotaFiscal,
+        produtos: this.produtosNotaFiscal,
       };
-      storeNotaFiscal(notaFiscal)
+      storeNotaFiscal(this.notaFiscal)
         .then(response => {
           console.log(response)
           this.$router.push({
-            name: "NotaFiscal"
+            name: "NotaFiscal",
+            params: { alert: true }
           });
         })
         .catch((error) => this.errors.push(error.response))
