@@ -1,5 +1,13 @@
 <template>
   <div id="marca">
+    <v-snackbar
+      v-model="alert"
+      top
+      color="success"
+      timeout="3000"
+    >
+      Marca criada com sucesso.
+    </v-snackbar>
     <v-subheader class="grey--text">Marca</v-subheader>
     <v-container class="my-5 pt-5">
       <h1 class="grey--text subtitle-1">Marcas</h1>
@@ -37,6 +45,11 @@ export default {
   data: () =>  {
     return {
       marcas: []
+    }
+  },
+  computed: {
+    alert () {
+      return this.$route.params.alert;
     }
   },
   methods: {

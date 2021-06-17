@@ -1,5 +1,13 @@
 <template>
   <div id="fornecedor">
+    <v-snackbar
+      v-model="alert"
+      top
+      color="success"
+      timeout="3000"
+    >
+      Fornecedor criado com sucesso.
+    </v-snackbar>
     <v-subheader class="grey--text">Fornecedor</v-subheader>
     <v-container class="my-5 pt-5">
       <h1 class="grey--text subtitle-1">Fornecedores</h1>
@@ -42,6 +50,12 @@ export default {
     return {
       fornecedores: [],
       errors: []
+    }
+  },
+
+  computed: {
+    alert () {
+      return this.$route.params.alert;
     }
   },
 

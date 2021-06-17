@@ -1,13 +1,5 @@
 <template>
   <div class="caixa">
-    <v-snackbar
-      v-model="alert"
-      top
-      color="success"
-      timeout="3000"
-    >
-    Caixa fechado com sucesso.
-    </v-snackbar>
     <v-subheader class="grey--text">Caixa</v-subheader>
     <v-container class="my-5 pt-5">
       <v-row dense align="center" justify="center">
@@ -58,7 +50,6 @@ export default {
     return {
       valorInicial: "",
       errors: [],
-      alert: this.$route.params.alert,
       turno: [ 'Matutino', 'Noturno'],
       selectedTurno: ""
     };

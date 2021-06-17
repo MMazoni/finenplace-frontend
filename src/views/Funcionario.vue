@@ -1,5 +1,13 @@
 <template>
   <div id="funcionario">
+    <v-snackbar
+      v-model="alert"
+      top
+      color="success"
+      timeout="3000"
+    >
+      Funcionário criado com sucesso.
+    </v-snackbar>
     <v-subheader class="grey--text">Funcionário</v-subheader>
     <v-container class="my-5 pt-5">
       <h1 class="grey--text subtitle-1">Funcionários</h1>
@@ -41,6 +49,11 @@ export default {
   data: () =>  {
     return {
       funcionarios: []
+    }
+  },
+  computed: {
+    alert () {
+      return this.$route.params.alert;
     }
   },
   methods: {

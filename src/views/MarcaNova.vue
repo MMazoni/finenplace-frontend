@@ -52,7 +52,8 @@ export default {
         .then(response => {
           console.log(response)
           this.$router.push({
-            name: "Marca"
+            name: "Marca",
+            params: { alert: true }
           });
         })
         .catch((error) => this.errors.push(error.response));

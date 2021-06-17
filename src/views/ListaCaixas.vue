@@ -1,5 +1,13 @@
 <template>
   <div class="caixas">
+    <v-snackbar
+      v-model="alert"
+      top
+      color="success"
+      timeout="3000"
+    >
+      Caixa fechado com sucesso.
+    </v-snackbar>
     <v-subheader class="grey--text">Dashboard</v-subheader>
     <v-container class="my-5">
       <v-row justify="center">
@@ -89,6 +97,9 @@ export default {
     dataInicioFormatada () {
       return this.picker ? moment(`${this.picker}-01`).format('DD/MM/YYYY') : ''
     },
+    alert () {
+      return this.$route.params.alert;
+    }
   },
 
   methods: {

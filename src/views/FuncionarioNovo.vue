@@ -32,7 +32,7 @@
               required
             ></v-text-field>
 
-            <v-text-field         
+            <v-text-field
               id="password"
               v-model.lazy="password"
               label="Senha"
@@ -89,7 +89,8 @@ export default {
         .then(response => {
           console.log(response)
           this.$router.push({
-            name: "Funcionario"
+            name: "Funcionario",
+            params: { alert: true },
           });
         })
         .catch((error) => this.errors.push(error.response));

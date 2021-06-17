@@ -70,7 +70,8 @@ export default {
       }).then(response => {
         console.log(response)
         this.$router.push({
-          name: "Fornecedor"
+          name: "Fornecedor",
+          params: { alert: true },
         });
       }).catch(error => this.errors.push(error.response));
     }
